@@ -1,0 +1,15 @@
+{
+  "name": "ewallet-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone",
+    "proxy": {
+    "/api": {
+      "target": "https://api-basisdata-sekolah.kemdikbud.go.id",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
+  
+}

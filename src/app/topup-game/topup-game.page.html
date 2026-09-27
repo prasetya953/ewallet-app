@@ -1,0 +1,149 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Top Up Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="game-content">
+  <div class="container">
+    <!-- Header -->
+    <ion-card class="header-card">
+      <ion-card-header>
+        <div class="header-content">
+          <div class="icon-wrapper">
+            <ion-icon name="game-controller-outline"></ion-icon>
+          </div>
+          <h1>Top Up Game</h1>
+          <p>Isi diamond, koin, dan mata uang game favoritmu</p>
+        </div>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- Game Selection -->
+    <ion-card class="selection-card">
+      <ion-card-header>
+        <ion-card-title>Pilih Game</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="game-grid">
+          <div 
+            *ngFor="let game of games" 
+            class="game-item" 
+            [class.selected]="selectedGame === game.id"
+            (click)="selectedGame = game.id"
+          >
+            <div class="game-logo">{{ game.logo }}</div>
+            <p class="game-name">{{ game.name }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Game ID Input -->
+    <ion-card class="input-card" *ngIf="selectedGame">
+      <ion-card-header>
+        <ion-card-title>Data Akun</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item class="form-item">
+          <ion-label position="stacked">ID Game / Username</ion-label>
+          <ion-input 
+            [(ngModel)]="gameId" 
+            type="text" 
+            placeholder="Masukkan ID Game"
+            class="custom-input"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item class="form-item">
+          <ion-label position="stacked">Server ID (Optional)</ion-label>
+          <ion-input 
+            type="text" 
+            placeholder="Masukkan Server ID"
+            class="custom-input"
+          ></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Denominations -->
+    <ion-card class="denominations-card" *ngIf="selectedGame && gameId">
+      <ion-card-header>
+        <ion-card-title>Pilih Nominal</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="denominations-grid">
+          <div 
+            *ngFor="let amount of getSelectedGame()?.denominations" 
+            class="denomination-item" 
+            [class.selected]="selectedAmount === amount"
+            (click)="selectAmount(amount)"
+          >
+            <p class="amount">Rp{{ formatCurrency(amount) }}</p>
+          </div>
+        </div>
+
+        <!-- Custom Amount -->
+        <div class="custom-amount">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Atau masukkan nominal custom</ion-label>
+            <ion-input 
+              [(ngModel)]="customAmount" 
+              type="number" 
+              placeholder="Min. Rp5.000"
+              (ionInput)="onCustomAmountChange()"
+              class="custom-input"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Total Amount -->
+        <div class="total-section" *ngIf="selectedAmount || customAmount">
+          <div class="total-amount">
+            <h3>Total Pembayaran</h3>
+            <h1 class="amount">Rp{{ formatCurrency(selectedAmount || customAmount) }}</h1>
+            <p class="amount-note">Kode top up akan dikirim ke ID game Anda</p>
+          </div>
+        </div>
+
+        <!-- Pay Button -->
+        <ion-button 
+          expand="block" 
+          class="pay-button" 
+          (click)="prosesTopUp()"
+          [disabled]="!selectedGame || !gameId || (!selectedAmount && !customAmount)"
+        >
+          <ion-icon slot="start" name="sparkles-outline"></ion-icon>
+          Top Up Sekarang
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Information -->
+    <div class="info-section">
+      <h3>💡 Tips Top Up</h3>
+      <div class="info-list">
+        <div class="info-item">
+          <ion-icon name="shield-checkmark-outline" color="primary"></ion-icon>
+          <span>Pastikan ID game dan server sudah benar</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="time-outline" color="warning"></ion-icon>
+          <span>Proses top up membutuhkan waktu 1-5 menit</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="help-circle-outline" color="medium"></ion-icon>
+          <span>Untuk bantuan, hubungi customer service</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

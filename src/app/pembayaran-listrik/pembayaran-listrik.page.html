@@ -1,0 +1,430 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" text="" class="custom-back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="custom-title">Bayar Listrik</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="listrik-page">
+  <div class="listrik-container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <div class="header-content">
+        <div class="header-icon">
+          <ion-icon name="flash-outline"></ion-icon>
+        </div>
+        <h1 class="header-title">Token Listrik</h1>
+        <p class="header-subtitle">Isi token listrik PLN Prabayar dengan mudah</p>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-card">
+      <h2 class="section-title">Data Pelanggan</h2>
+      
+      <div class="input-group">
+        <div class="input-field">
+          <label class="input-label">Nomor Meter/ID Pelanggan</label>
+          <div class="input-container">
+            <ion-icon name="card-outline" class="field-icon"></ion-icon>
+            <input 
+              type="text" 
+              [(ngModel)]="nomorMeter"
+              placeholder="Contoh: 12345678901"
+              class="custom-input"
+              maxlength="11"
+            >
+          </div>
+        </div>
+
+        <div class="input-field">
+          <label class="input-label">Daya</label>
+          <div class="input-container">
+            <ion-icon name="speedometer-outline" class="field-icon"></ion-icon>
+            <select 
+              [(ngModel)]="daya" 
+              (change)="hitungToken()"
+              class="custom-select"
+            >
+              <option value="">Pilih daya</option>
+              <option value="450">450 VA - Rp20.000</option>
+              <option value="900">900 VA - Rp50.000</option>
+              <option value="1300">1300 VA - Rp100.000</option>
+              <option value="2200">2200 VA - Rp200.000</option>
+              <option value="3500">3500 VA - Rp500.000</option>
+              <option value="5500">5500 VA - Rp1.000.000</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amount Display -->
+      @if (jumlah > 0) {
+        <div class="amount-section">
+          <div class="amount-header">
+            <h3 class="amount-title">Total Pembayaran</h3>
+            <div class="pln-badge">PLN Prabayar</div>
+          </div>
+          <h1 class="amount-display">Rp{{ formatCurrency(jumlah) }}</h1>
+          <p class="amount-note">Token akan dikirim via SMS</p>
+        </div>
+      }
+
+      <!-- Pay Button -->
+      <div class="action-section">
+        <button 
+          class="pay-button"
+          (click)="prosesPembayaran()"
+          [disabled]="!nomorMeter || !daya"
+        >
+          <ion-icon name="flash-outline" class="button-icon"></ion-icon>
+          Beli Token
+        </button>
+      </div>
+    </div>
+
+    <!-- Information Section -->
+    <div class="info-card">
+      <h3 class="info-title">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        Informasi Token
+      </h3>
+      <div class="info-list">
+        <div class="info-item">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <span>Pastikan nomor meter sudah benar</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <span>Token akan dikirim dalam 1-3 menit</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <span>Simpan token dengan baik</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          <span>Input token secara berurutan di meteran</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+.listrik-page {
+  --background: #f8fafc;
+}
+
+/* Toolbar Styling */
+.custom-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e2e8f0 !important;
+}
+
+.custom-title {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+}
+
+.custom-back-button {
+  --color: #1e293b !important;
+}
+
+/* Container */
+.listrik-container {
+  padding: 0 16px;
+}
+
+/* Header Section */
+.header-section {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-radius: 16px;
+  padding: 30px 24px;
+  margin: 20px 0;
+  color: white;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.header-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.header-icon ion-icon {
+  font-size: 28px;
+  color: white;
+}
+
+.header-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.header-subtitle {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Payment Card */
+.payment-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 20px 0;
+}
+
+/* Input Fields */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  position: absolute;
+  left: 12px;
+  color: #64748b;
+  font-size: 18px;
+  z-index: 2;
+}
+
+.custom-input,
+.custom-select {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 12px 12px 40px;
+  font-size: 15px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.custom-input:focus,
+.custom-select:focus {
+  border-color: #60a5fa;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.custom-input::placeholder {
+  color: #94a3b8;
+}
+
+.custom-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+/* Amount Section */
+.amount-section {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+  color: white;
+  text-align: center;
+}
+
+.amount-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.amount-title {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.pln-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.amount-display {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.amount-note {
+  font-size: 12px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Action Button */
+.action-section {
+  margin-top: 8px;
+}
+
+.pay-button {
+  width: 100%;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.pay-button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.pay-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button-icon {
+  font-size: 18px;
+}
+
+/* Info Card */
+.info-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.info-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-title ion-icon {
+  color: #60a5fa;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.info-item ion-icon {
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.info-item span {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.4;
+  flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 360px) {
+  .listrik-container {
+    padding: 0 12px;
+  }
+  
+  .header-section {
+    padding: 24px 20px;
+  }
+  
+  .payment-card,
+  .info-card {
+    padding: 20px;
+  }
+  
+  .header-title {
+    font-size: 20px;
+  }
+  
+  .amount-display {
+    font-size: 24px;
+  }
+  
+  .header-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .header-icon ion-icon {
+    font-size: 24px;
+  }
+}
+</style>

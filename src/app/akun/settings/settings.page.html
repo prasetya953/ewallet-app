@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ion-color-primary: #667eea;
+      --ion-color-primary-rgb: 102, 126, 234;
+      --ion-color-primary-contrast: #ffffff;
+      --ion-color-primary-contrast-rgb: 255, 255, 255;
+      --ion-color-primary-shade: #5a6fce;
+      --ion-color-primary-tint: #758bec;
+      
+      --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      --gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #1a1a1a;
+    }
+
+    ion-app {
+      background: #f8f9fa;
+    }
+
+    ion-header {
+      background: #f8f9fa;
+    }
+
+    ion-toolbar {
+      --background: #ffffff;
+      --color: #1a1a1a;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    ion-title {
+      color: #1a1a1a !important;
+      font-weight: 600;
+    }
+
+    ion-content {
+      --background: #f8f9fa;
+      --color: #1a1a1a;
+    }
+
+    .settings-header {
+      background: linear-gradient(90deg, #262726, #3d3f3e);
+      padding: 60px 20px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+      border-radius: 0 0 25px 25px;
+      margin-bottom: 20px;
+    }
+
+    .settings-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+      color: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .settings-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 10px;
+      color: white;
+    }
+
+    .settings-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+    }
+
+    .content-wrapper {
+      background: #f8f9fa;
+      padding: 0;
+      margin-top: -20px;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 0 20px;
+      margin: 25px 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      color: #1a1a1a; /* Changed to black */
+    }
+
+    /* Menu List */
+    .menu-list {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      background: white;
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-item:hover {
+      background: #f5f5f5;
+    }
+
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      background: #f5f5f5; /* Changed to light gray */
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: #1a1a1a; /* Changed to black */
+      font-size: 16px;
+    }
+
+    .menu-content {
+      flex: 1;
+    }
+
+    .menu-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .menu-desc {
+      font-size: 13px;
+      color: #666666;
+    }
+
+    .menu-value {
+      font-size: 14px;
+      color: #666666;
+      margin-right: 10px;
+    }
+
+    .menu-arrow {
+      color: #999999;
+      font-size: 14px;
+    }
+
+    /* Toggle Styles */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Theme Selector */
+    .theme-selector {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .theme-option {
+      flex: 1;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .theme-option:hover {
+      border-color: grey;
+    }
+
+    .theme-option.selected {
+      border-color: #667eea;
+      background: grey;
+    }
+
+    .theme-preview {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      margin: 0 auto 8px;
+    }
+
+    .theme-dark {
+      background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%); /* Changed to gray gradient */
+    }
+
+    .theme-light {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    }
+
+    .theme-blue {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .theme-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .theme-option.selected .theme-name {
+      color: white;
+    }
+
+    /* Language Selector */
+    .language-selector {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 15px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .language-option {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+    }
+
+    .language-option:last-child {
+      border-bottom: none;
+    }
+
+    .language-flag {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+
+    .language-name {
+      flex: 1;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .language-check {
+      color: #667eea;
+      font-size: 14px;
+    }
+
+    /* App Version */
+    .app-info {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666666;
+    }
+
+    .app-version {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .app-copyright {
+      font-size: 12px;
+    }
+
+    /* Danger Zone */
+    .danger-zone {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+    }
+
+    .danger-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .danger-desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 20px;
+    }
+
+    .danger-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .danger-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Success Message */
+    .success-message {
+      background: #10b981;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin: 0 20px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideDown 0.3s ease;
+      display: none;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .theme-selector {
+        flex-direction: column;
+      }
+      
+      .settings-header {
+        padding: 40px 20px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/tabs/akun" text="Back"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Settings</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen scroll-y="true">
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        Settings updated successfully!
+      </div>
+
+      <!-- Settings Header -->
+      <div class="settings-header">
+        <div class="settings-icon">
+          <i class="fas fa-cog"></i>
+        </div>
+        <h1 class="settings-title">Settings</h1>
+        <p class="settings-subtitle">Manage your app preferences</p>
+      </div>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Appearance Section -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-palette"></i>
+            Appearance
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-moon"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Dark Mode</div>
+                <div class="menu-desc">Use dark theme across the app</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end" checked></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-font"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Text Size</div>
+                <div class="menu-desc">Adjust the text size</div>
+              </div>
+              <div class="menu-value">Medium</div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin: 20px 0 15px; font-size: 16px; color: #1a1a1a;">Theme</h3>
+          <div class="theme-selector">
+            <div class="theme-option selected">
+              <div class="theme-preview theme-dark"></div>
+              <div class="theme-name">Dark</div>
+            </div>
+            <div class="theme-option">
+              <div class="theme-preview theme-light"></div>
+              <div class="theme-name">Light</div>
+            </div>
+            <div class="theme-option">
+              <div class="theme-preview theme-blue"></div>
+              <div class="theme-name">Blue</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Push Notifications</div>
+                <div class="menu-desc">Receive push notifications</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end" checked></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Email Notifications</div>
+                <div class="menu-desc">Receive updates via email</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end" checked></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-sms"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">SMS Notifications</div>
+                <div class="menu-desc">Receive text messages</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end"></ion-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy & Security -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-shield-alt"></i>
+            Privacy & Security
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-fingerprint"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Biometric Login</div>
+                <div class="menu-desc">Use fingerprint or face ID</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end"></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Two-Factor Auth</div>
+                <div class="menu-desc">Extra security for your account</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end"></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-eye"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Data Sharing</div>
+                <div class="menu-desc">Control how your data is used</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Language & Region -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-globe"></i>
+            Language & Region
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-language"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Language</div>
+                <div class="menu-desc">Choose your preferred language</div>
+              </div>
+              <div class="menu-value">English</div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Region</div>
+                <div class="menu-desc">Set your current region</div>
+              </div>
+              <div class="menu-value">United States</div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="language-selector">
+            <h3 style="margin-bottom: 15px; font-size: 16px; color: #1a1a1a;">Select Language</h3>
+            <div class="language-option">
+              <div class="language-flag">🇺🇸</div>
+              <div class="language-name">English</div>
+              <div class="language-check">
+                <i class="fas fa-check"></i>
+              </div>
+            </div>
+            <div class="language-option">
+              <div class="language-flag">🇮🇩</div>
+              <div class="language-name">Bahasa Indonesia</div>
+              <div class="language-check"></div>
+            </div>
+            <div class="language-option">
+              <div class="language-flag">🇪🇸</div>
+              <div class="language-name">Español</div>
+              <div class="language-check"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Storage Section -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-database"></i>
+            Storage
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-trash"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Clear Cache</div>
+                <div class="menu-desc">Free up temporary storage</div>
+              </div>
+              <div class="menu-value">256 MB</div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-download"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Download Quality</div>
+                <div class="menu-desc">Set media download quality</div>
+              </div>
+              <div class="menu-value">Auto</div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-info-circle"></i>
+            About
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Terms of Service</div>
+                <div class="menu-desc">Read our terms and conditions</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-shield"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Privacy Policy</div>
+                <div class="menu-desc">Learn about our privacy practices</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-question-circle"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Help & Support</div>
+                <div class="menu-desc">Get help using the app</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="danger-zone slide-up">
+          <div class="danger-title">Danger Zone</div>
+          <div class="danger-desc">Irreversible and destructive actions</div>
+          <button class="danger-btn" id="deleteAccount">
+            <i class="fas fa-trash"></i>
+            Delete Account
+          </button>
+        </div>
+
+        <!-- App Info -->
+        <div class="app-info slide-up">
+          <div class="app-version">App Version 2.4.1</div>
+          <div class="app-copyright">© 2024 YourApp. All rights reserved.</div>
+        </div>
+
+        <div style="height: 40px;"></div>
+      </div>
+    </ion-content>
+  </ion-app>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const successMessage = document.getElementById('successMessage');
+      const deleteAccountBtn = document.getElementById('deleteAccount');
+      
+      // Theme selection
+      const themeOptions = document.querySelectorAll('.theme-option');
+      themeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          themeOptions.forEach(opt => opt.classList.remove('selected'));
+          this.classList.add('selected');
+          showSuccess('Theme updated successfully!');
+        });
+      });
+
+      // Language selection
+      const languageOptions = document.querySelectorAll('.language-option');
+      languageOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          languageOptions.forEach(opt => {
+            opt.querySelector('.language-check').innerHTML = '';
+          });
+          this.querySelector('.language-check').innerHTML = '<i class="fas fa-check"></i>';
+          showSuccess('Language updated successfully!');
+        });
+      });
+
+      // Toggle changes
+      const toggles = document.querySelectorAll('ion-toggle');
+      toggles.forEach(toggle => {
+        toggle.addEventListener('ionChange', function() {
+          const settingName = this.closest('.menu-item').querySelector('.menu-title').textContent;
+          showSuccess(`${settingName} updated successfully!`);
+        });
+      });
+
+      // Delete account confirmation
+      deleteAccountBtn.addEventListener('click', function() {
+        if (confirm('Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently lost.')) {
+          if (confirm('This is your final warning. All your data, including transactions, history, and personal information will be deleted permanently. Are you absolutely sure?')) {
+            showSuccess('Account deletion scheduled. You will receive a confirmation email.');
+          }
+        }
+      });
+
+      // Menu item clicks
+      const menuItems = document.querySelectorAll('.menu-item');
+      menuItems.forEach(item => {
+        if (!item.querySelector('ion-toggle')) {
+          item.addEventListener('click', function() {
+            const menuTitle = this.querySelector('.menu-title').textContent;
+            showSuccess(`Opening ${menuTitle}...`);
+          });
+        }
+      });
+
+      function showSuccess(message) {
+        successMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+        successMessage.style.display = 'flex';
+        
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 3000);
+      }
+
+      console.log('Settings page loaded successfully');
+    });
+  </script>
+</body>
+</html>

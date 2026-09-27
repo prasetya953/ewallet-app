@@ -1,0 +1,127 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <!-- Background Elements tetap sama
+  <div class="background-elements">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
+    <div class="floating-circle circle-4"></div>
+    <div class="wave-animation"></div>
+  </div> -->
+
+  <div class="login-container">
+    <!-- Header Section -->
+    <div class="login-header-section">
+      <div class="avatar-container">
+        <div class="avatar-glow"></div>
+        <img src="/assets/gambar/profil.png" alt="Profile" class="profile-avatar">
+      </div>
+      <h1 class="welcome-text">Selamat Datang!</h1>
+      <p class="subtitle">Silahkan Login ke Akun Anda</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form" [class.submitted]="submitted">
+      <!-- Form inputs tetap sama -->
+      <ion-item class="form-item animated-input">
+        <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input 
+          label="Username" 
+          labelPlacement="stacked" 
+          type="text" 
+          [(ngModel)]="username"
+          placeholder="Enter your username"
+          class="custom-input">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="!username && submitted">
+        ❌ Username is required
+      </div>
+
+      <ion-item class="form-item animated-input">
+        <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input 
+          label="Password" 
+          labelPlacement="stacked" 
+          [type]="showPassword ? 'text' : 'password'" 
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          class="custom-input">
+        </ion-input>
+        <ion-icon 
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" 
+          slot="end" 
+          class="toggle-password"
+          (click)="togglePasswordVisibility()">
+        </ion-icon>
+      </ion-item>
+      <div class="error-message" *ngIf="!password && submitted">
+        ❌ Password is required
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <ion-button 
+          expand="block" 
+          class="login-btn" 
+          (click)="login()">
+          <ion-icon name="log-in-outline" slot="start"></ion-icon>
+          Login
+        </ion-button>
+        
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          class="reset-btn" 
+          (click)="reset()">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Reset
+        </ion-button>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider-section">
+        <div class="divider-line"></div>
+        <span class="divider-text">ATAU</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Google Login Section - PERUBAHAN PENTING -->
+      <div class="social-login-section">
+        <div class="google-button-wrapper">
+          <div id="googleLoginBtn"></div>
+        </div>
+        
+        <!-- Fallback Manual Button -->
+        <ion-button 
+          expand="block" 
+          fill="clear" 
+          class="google-login-fallback"
+          (click)="loginWithGoogleManual()"
+          *ngIf="!isGoogleApiLoaded">
+          <ion-icon name="logo-google" slot="start"></ion-icon>
+          Continue with Google
+        </ion-button>
+      </div>
+
+      <!-- Additional Options -->
+      <div class="login-options">
+        <ion-item lines="none" class="remember-me">
+          <ion-checkbox slot="start" [(ngModel)]="rememberMe"></ion-checkbox>
+          <ion-label>Remember me</ion-label>
+        </ion-item>
+        <a href="javascript:void(0)" class="forgot-password" (click)="forgotPassword()">
+          Lupa Password?
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="login-footer">
+      <p>Belum Punya Akun?
+        <a href="javascript:void(0)" class="signup-link" (click)="goToSignup()">
+          Daftar
+        </a>
+      </p>
+    </div>
+  </div>
+</ion-content>

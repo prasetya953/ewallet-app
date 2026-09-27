@@ -1,0 +1,202 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="Kembali" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Langganan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    
+    <!-- Status Langganan Saat Ini -->
+    <div class="current-subscription">
+      <ion-card class="subscription-card active">
+        <div class="card-header">
+          <div class="plan-badge">
+            <ion-icon name="diamond"></ion-icon>
+            <span>Aktif</span>
+          </div>
+          <ion-button fill="clear" size="small" (click)="manageSubscription()">
+            <ion-icon name="ellipsis-horizontal"></ion-icon>
+          </ion-button>
+        </div>
+        
+        <div class="plan-info">
+          <h2>{{ currentPlan.name }}</h2>
+          <p class="plan-price">
+            {{ currentPlan.price === 0 ? 'Gratis' : formatCurrency(currentPlan.price) }}
+            <span>/{{ currentPlan.period }}</span>
+          </p>
+          <p class="expiry-date">Berlaku hingga {{ formatDate(currentPlan.expires) }}</p>
+        </div>
+
+        <div class="plan-features">
+          <div class="feature-item" *ngFor="let feature of currentPlan.features">
+            <ion-icon name="checkmark" class="feature-check"></ion-icon>
+            <span>{{ feature }}</span>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="benefits-section">
+      <h2 class="section-title">Manfaat Premium</h2>
+      <p class="section-subtitle">Nikmati berbagai keuntungan dengan langganan premium</p>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card" *ngFor="let benefit of benefits">
+          <div class="benefit-icon">
+            <ion-icon [name]="benefit.icon"></ion-icon>
+          </div>
+          <h3>{{ benefit.title }}</h3>
+          <p>{{ benefit.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pilihan Paket Langganan -->
+    <div class="plans-section">
+      <div class="section-header">
+        <h2 class="section-title">Pilih Paket Langganan</h2>
+        <p class="section-subtitle">Tingkatkan pengalaman banking Anda</p>
+      </div>
+
+      <div class="plans-grid">
+        <ion-card 
+          *ngFor="let plan of subscriptionPlans" 
+          class="plan-card"
+          [class.recommended]="plan.recommended"
+          [class.popular]="plan.popular"
+        >
+          <!-- Popular Badge -->
+          <div class="popular-badge" *ngIf="plan.popular">
+            <ion-icon name="trophy"></ion-icon>
+            <span>Paling Populer</span>
+          </div>
+
+          <div class="plan-header">
+            <div class="plan-icon" [style.background]="plan.color">
+              <ion-icon [name]="plan.icon"></ion-icon>
+            </div>
+            <div class="plan-title">
+              <h3>{{ plan.name }}</h3>
+              <p *ngIf="plan.recommended" class="recommended-text">Direkomendasikan</p>
+            </div>
+          </div>
+
+          <div class="plan-pricing">
+            <p class="price">
+              {{ plan.price === 0 ? 'Gratis' : formatCurrency(plan.price) }}
+            </p>
+            <p class="period">/{{ plan.period }}</p>
+          </div>
+
+          <div class="plan-features-list">
+            <div 
+              class="feature-line" 
+              *ngFor="let feature of plan.features"
+              [class.included]="feature.included"
+            >
+              <ion-icon 
+                [name]="feature.included ? 'checkmark' : 'close'" 
+                class="feature-icon"
+                [class.included]="feature.included"
+              ></ion-icon>
+              <span>{{ feature.name }}</span>
+            </div>
+          </div>
+
+          <div class="plan-action">
+            <ion-button 
+              expand="block" 
+              [color]="plan.recommended ? 'primary' : 'medium'"
+              [fill]="plan.recommended ? 'solid' : 'outline'"
+              (click)="selectPlan(plan)"
+            >
+              {{ plan.price === 0 ? 'Gratis' : 'Pilih' }}
+              {{ currentPlan.name === plan.name ? '• Aktif' : '' }}
+            </ion-button>
+          </div>
+        </ion-card>
+      </div>
+    </div>
+
+    <!-- Riwayat Pembayaran -->
+    <div class="billing-section">
+      <div class="section-header">
+        <h2 class="section-title">Riwayat Pembayaran</h2>
+        <p class="section-subtitle">Catatan transaksi langganan Anda</p>
+      </div>
+
+      <div class="billing-list">
+        <ion-card class="billing-card" *ngFor="let bill of billingHistory">
+          <div class="billing-content">
+            <div class="billing-info">
+              <div class="billing-header">
+                <h3>{{ bill.plan }}</h3>
+                <ion-badge [color]="getStatusBadgeColor(bill.status)">
+                  {{ bill.status === 'success' ? 'Berhasil' : bill.status }}
+                </ion-badge>
+              </div>
+              <p class="billing-date">{{ formatDate(bill.date) }}</p>
+              <p class="billing-invoice">No: {{ bill.invoice }}</p>
+            </div>
+            
+            <div class="billing-amount">
+              <p class="amount">{{ formatCurrency(bill.amount) }}</p>
+              <div class="billing-actions">
+                <ion-button fill="clear" size="small">
+                  <ion-icon name="download"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" size="small">
+                  <ion-icon name="share-social"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </ion-card>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <div class="section-header">
+        <h2 class="section-title">Pertanyaan Umum</h2>
+        <p class="section-subtitle">Informasi penting tentang langganan</p>
+      </div>
+
+      <div class="faq-list">
+        <ion-card class="faq-card">
+          <ion-item button detail="true">
+            <ion-label>
+              <h3>Bagaimana cara membatalkan langganan?</h3>
+              <p>Anda bisa membatalkan kapan saja melalui halaman pengaturan langganan</p>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+
+        <ion-card class="faq-card">
+          <ion-item button detail="true">
+            <ion-label>
+              <h3>Apakah ada biaya tersembunyi?</h3>
+              <p>Tidak ada biaya tersembunyi. Harga yang ditampilkan adalah harga final</p>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+
+        <ion-card class="faq-card">
+          <ion-item button detail="true">
+            <ion-label>
+              <h3>Bisakah saya upgrade/downgrade plan?</h3>
+              <p>Ya, Anda bisa mengubah plan kapan saja. Perubahan akan berlaku di siklus berikutnya</p>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

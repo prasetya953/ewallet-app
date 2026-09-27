@@ -1,0 +1,309 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="back-button">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="page-title">Bayar Internet</ion-title>
+    <div slot="end" class="header-actions">
+      <ion-button fill="clear" class="help-button">
+        <ion-icon slot="icon-only" name="help-circle-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="internet-content">
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+      <div class="step active">
+        <div class="step-number">1</div>
+        <span class="step-label">Data Pelanggan</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step" [class.active]="jumlah > 0">
+        <div class="step-number">2</div>
+        <span class="step-label">Konfirmasi</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <span class="step-label">Selesai</span>
+      </div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="header-section">
+      <div class="header-icon">
+        <div class="icon-circle">
+          <ion-icon name="wifi" class="wifi-icon"></ion-icon>
+        </div>
+      </div>
+      <h1 class="main-title">Bayar Tagihan Internet</h1>
+      <p class="subtitle">Lunasi tagihan internet bulanan dengan mudah dan aman</p>
+    </div>
+
+    <!-- Quick Provider Selection -->
+    <div class="quick-providers">
+      <h3 class="section-title">Pilih Provider</h3>
+      <div class="provider-grid">
+        <div class="provider-card" 
+             [class.active]="provider === 'indihome'"
+             (click)="selectProvider('indihome')">
+          <div class="provider-logo indihome">
+            <ion-icon name="tv-outline"></ion-icon>
+          </div>
+          <span>Indihome</span>
+        </div>
+        <div class="provider-card"
+             [class.active]="provider === 'biznet'"
+             (click)="selectProvider('biznet')">
+          <div class="provider-logo biznet">
+            <ion-icon name="speedometer-outline"></ion-icon>
+          </div>
+          <span>Biznet</span>
+        </div>
+        <div class="provider-card"
+             [class.active]="provider === 'firstmedia'"
+             (click)="selectProvider('firstmedia')">
+          <div class="provider-logo firstmedia">
+            <ion-icon name="play-circle-outline"></ion-icon>
+          </div>
+          <span>First Media</span>
+        </div>
+        <div class="provider-card"
+             [class.active]="provider === 'myrepublic'"
+             (click)="selectProvider('myrepublic')">
+          <div class="provider-logo myrepublic">
+            <ion-icon name="globe-outline"></ion-icon>
+          </div>
+          <span>MyRepublic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Form Card -->
+    <ion-card class="payment-form-card">
+      <ion-card-header class="card-header">
+        <ion-card-title>
+          <ion-icon name="document-text-outline" class="title-icon"></ion-icon>
+          Data Pelanggan
+        </ion-card-title>
+        <p class="card-subtitle">Masukkan informasi pelanggan dengan benar</p>
+      </ion-card-header>
+
+      <ion-card-content class="card-content">
+        <!-- Provider Selection -->
+        <div class="form-group">
+          <label class="form-label">Provider Internet</label>
+          <div class="custom-select-wrapper">
+            <ion-select 
+              [(ngModel)]="provider" 
+              (ionChange)="hitungTagihan()"
+              class="custom-select"
+              interface="action-sheet"
+            >
+              <ion-select-option value="indihome">
+                <div class="option-content">
+                  <ion-icon name="tv-outline"></ion-icon>
+                  <span>Indihome</span>
+                </div>
+              </ion-select-option>
+              <ion-select-option value="biznet">
+                <div class="option-content">
+                  <ion-icon name="speedometer-outline"></ion-icon>
+                  <span>Biznet</span>
+                </div>
+              </ion-select-option>
+              <ion-select-option value="firstmedia">
+                <div class="option-content">
+                  <ion-icon name="play-circle-outline"></ion-icon>
+                  <span>First Media</span>
+                </div>
+              </ion-select-option>
+              <ion-select-option value="myrepublic">
+                <div class="option-content">
+                  <ion-icon name="globe-outline"></ion-icon>
+                  <span>MyRepublic</span>
+                </div>
+              </ion-select-option>
+              <ion-select-option value="mega">
+                <div class="option-content">
+                  <ion-icon name="flash-outline"></ion-icon>
+                  <span>Mega</span>
+                </div>
+              </ion-select-option>
+            </ion-select>
+            <ion-icon name="chevron-down-outline" class="select-arrow"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Customer Number -->
+        <div class="form-group">
+          <label class="form-label">Nomor Pelanggan</label>
+          <div class="input-with-icon">
+            <ion-icon name="person-circle-outline" class="input-icon"></ion-icon>
+            <ion-input 
+              [(ngModel)]="nomorPelanggan" 
+              type="text" 
+              placeholder="Contoh: IN123456789"
+              class="custom-input"
+              (ionInput)="validateCustomerNumber()"
+            ></ion-input>
+          </div>
+          <div class="input-hint" *ngIf="nomorPelanggan">
+            <ion-icon name="checkmark-circle" color="success" *ngIf="isValidCustomerNumber(nomorPelanggan)"></ion-icon>
+            <ion-icon name="alert-circle" color="warning" *ngIf="!isValidCustomerNumber(nomorPelanggan)"></ion-icon>
+            <span>{{ isValidCustomerNumber(nomorPelanggan) ? 'Format nomor valid' : 'Periksa format nomor' }}</span>
+          </div>
+        </div>
+
+        <!-- Package Selection -->
+        <div class="form-group">
+          <label class="form-label">Paket Internet</label>
+          <div class="package-grid">
+            <div class="package-card" 
+                 [class.selected]="paket === '10mbps'"
+                 (click)="selectPackage('10mbps')">
+              <div class="package-speed">10 Mbps</div>
+              <div class="package-price">Rp250.000</div>
+              <div class="package-desc">Untuk 1-2 device</div>
+            </div>
+            <div class="package-card"
+                 [class.selected]="paket === '20mbps'"
+                 (click)="selectPackage('20mbps')">
+              <div class="package-speed">20 Mbps</div>
+              <div class="package-price">Rp350.000</div>
+              <div class="package-desc">Untuk 3-5 device</div>
+            </div>
+            <div class="package-card"
+                 [class.selected]="paket === '50mbps'"
+                 (click)="selectPackage('50mbps')">
+              <div class="package-speed">50 Mbps</div>
+              <div class="package-price">Rp500.000</div>
+              <div class="package-desc">Untuk keluarga</div>
+            </div>
+            <div class="package-card"
+                 [class.selected]="paket === '100mbps'"
+                 (click)="selectPackage('100mbps')">
+              <div class="package-speed">100 Mbps</div>
+              <div class="package-price">Rp750.000</div>
+              <div class="package-desc">Untuk streaming</div>
+            </div>
+            <div class="package-card"
+                 [class.selected]="paket === '200mbps'"
+                 (click)="selectPackage('200mbps')">
+              <div class="package-speed">200 Mbps</div>
+              <div class="package-price">Rp1.200.000</div>
+              <div class="package-desc">Untuk gaming</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bill Summary -->
+        <div class="bill-summary" *ngIf="jumlah > 0">
+          <div class="summary-header">
+            <h3>Ringkasan Tagihan</h3>
+            <div class="provider-badge">{{ getProviderName() }}</div>
+          </div>
+          
+          <div class="bill-details">
+            <div class="bill-item">
+              <span>Paket Internet</span>
+              <span>{{ getPaketName() }}</span>
+            </div>
+            <div class="bill-item">
+              <span>Bulan Tagihan</span>
+              <span>{{ getCurrentMonth() }} 2024</span>
+            </div>
+            <div class="bill-item">
+              <span>Biaya Admin</span>
+              <span>Rp2.500</span>
+            </div>
+            <div class="bill-divider"></div>
+            <div class="bill-total">
+              <span>Total Bayar</span>
+              <span class="total-amount">Rp{{ formatCurrency(jumlah + 2500) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <ion-button 
+            expand="block" 
+            class="pay-button" 
+            (click)="prosesPembayaran()"
+            [disabled]="!provider || !nomorPelanggan || !paket || !isValidCustomerNumber(nomorPelanggan)"
+          >
+            <ion-icon slot="start" name="card-outline"></ion-icon>
+            Bayar Rp{{ formatCurrency(jumlah + 2500) }}
+          </ion-button>
+          
+          <ion-button 
+            expand="block" 
+            fill="outline" 
+            class="reset-button"
+            (click)="resetForm()"
+          >
+            <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            Reset Form
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Information & Features -->
+    <div class="features-section">
+      <h3 class="section-title">Keuntungan Bayar di Sini</h3>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon instant">
+            <ion-icon name="flash-outline"></ion-icon>
+          </div>
+          <h4>Proses Instan</h4>
+          <p>Aktif dalam 1-2 jam setelah pembayaran</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon secure">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+          </div>
+          <h4>100% Aman</h4>
+          <p>Data dan transaksi terlindungi</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon support">
+            <ion-icon name="headset-outline"></ion-icon>
+          </div>
+          <h4>Bantuan 24/7</h4>
+          <p>Customer service siap membantu</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="recent-transactions" *ngIf="recentTransactions.length > 0">
+      <h3 class="section-title">Transaksi Terakhir</h3>
+      <div class="transactions-list">
+        <div class="transaction-item" *ngFor="let transaction of recentTransactions">
+          <div class="transaction-icon">
+            <ion-icon name="wifi-outline"></ion-icon>
+          </div>
+          <div class="transaction-details">
+            <div class="transaction-provider">{{ transaction.provider }}</div>
+            <div class="transaction-date">{{ transaction.date }}</div>
+          </div>
+          <div class="transaction-amount">Rp{{ formatCurrency(transaction.amount) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

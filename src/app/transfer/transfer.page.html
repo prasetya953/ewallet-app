@@ -1,0 +1,432 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" text="" class="custom-back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="custom-title">Kirim Uang</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="scanQR()" fill="clear" class="scan-button">
+        <ion-icon slot="icon-only" name="qr-code-outline" class="scan-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="transfer-page">
+  <div class="transfer-form">
+    <!-- Amount Section -->
+    <div class="amount-card">
+      <div class="amount-header">
+        <h2 class="section-title">Jumlah Transfer</h2>
+        <div class="balance-info">
+          <span class="balance-label">Saldo Tersedia</span>
+          <span class="balance-amount">Rp {{ getCurrentBalance() | number:'1.0-0' }}</span>
+        </div>
+      </div>
+      
+      <div class="amount-input-section">
+        <div class="amount-input-container">
+          <span class="currency">Rp</span>
+          <input 
+            type="number" 
+            [(ngModel)]="transferAmount"
+            placeholder="0"
+            class="amount-input"
+            (input)="onAmountChange()"
+          >
+        </div>
+        
+        <div class="quick-amounts">
+          @for (amount of quickAmounts; track amount) {
+            <button 
+              class="quick-amount-btn"
+              [class.active]="transferAmount === amount"
+              (click)="setQuickAmount(amount)"
+            >
+              Rp {{ amount / 1000 }}K
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipient Section -->
+    <div class="recipient-card">
+      <h2 class="section-title">Penerima</h2>
+      
+      <div class="input-group">
+        <div class="input-field">
+          <div class="input-icon">
+            <ion-icon name="call-outline"></ion-icon>
+          </div>
+          <input 
+            type="tel"
+            [(ngModel)]="recipientNumber"
+            placeholder="Nomor handphone"
+            class="custom-input"
+          >
+        </div>
+        
+        <div class="input-field">
+          <div class="input-icon">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <input 
+            type="text"
+            [(ngModel)]="recipientName"
+            placeholder="Nama penerima"
+            class="custom-input"
+          >
+        </div>
+        
+        <div class="input-field">
+          <div class="input-icon">
+            <ion-icon name="document-text-outline"></ion-icon>
+          </div>
+          <input 
+            type="text"
+            [(ngModel)]="notes"
+            placeholder="Catatan (opsional)"
+            class="custom-input"
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Contacts -->
+    @if (recentContacts.length > 0) {
+      <div class="contacts-card">
+        <h2 class="section-title">Kontak Terbaru</h2>
+        <div class="contacts-list">
+          @for (contact of recentContacts; track contact.number) {
+            <div class="contact-item" (click)="selectContact(contact)">
+              <div class="contact-avatar">
+                {{ contact.avatar }}
+              </div>
+              <div class="contact-info">
+                <h3 class="contact-name">{{ contact.name }}</h3>
+                <p class="contact-number">{{ contact.number }}</p>
+              </div>
+              <div class="contact-action">
+                <ion-icon name="arrow-forward"></ion-icon>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Transfer Button -->
+    <div class="action-section">
+      <button 
+        class="transfer-btn"
+        (click)="processTransfer()"
+        [disabled]="!transferAmount || !recipientNumber"
+      >
+        <ion-icon name="paper-plane-outline"></ion-icon>
+        Transfer Sekarang
+      </button>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+.transfer-page {
+  --background: #f8fafc;
+}
+
+/* FIX: Toolbar Styling */
+.custom-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e2e8f0 !important;
+  --color: #1e293b !important;
+}
+
+.custom-title {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+}
+
+/* FIX: Back Button Styling */
+.custom-back-button {
+  --color: #1e293b !important;
+  --icon-color: #1e293b !important;
+}
+
+.custom-back-button::part(native) {
+  color: #1e293b !important;
+}
+
+.custom-back-button::part(icon) {
+  color: #1e293b !important;
+}
+
+/* FIX: Scan Button Styling */
+.scan-button {
+  --color: #1e293b !important;
+}
+
+.scan-icon {
+  color: #1e293b !important;
+}
+
+/* Cards */
+.amount-card,
+.recipient-card,
+.contacts-card {
+  background: #ffffff;
+  border-radius: 16px;
+  margin: 0 16px 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f1f5f9;
+}
+
+/* Amount Section */
+.amount-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.balance-info {
+  text-align: right;
+}
+
+.balance-label {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.balance-amount {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.amount-input-section {
+  text-align: center;
+}
+
+.amount-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.currency {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.amount-input {
+  border: none;
+  background: none;
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+  text-align: center;
+  width: 200px;
+  outline: none;
+}
+
+.amount-input::placeholder {
+  color: #cbd5e1;
+}
+
+.quick-amounts {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quick-amount-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-amount-btn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* Input Fields */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #64748b;
+  z-index: 2;
+}
+
+.input-icon ion-icon {
+  font-size: 18px;
+}
+
+.custom-input {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 12px 12px 40px;
+  font-size: 15px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.custom-input:focus {
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.custom-input::placeholder {
+  color: #94a3b8;
+}
+
+/* Contacts */
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+
+.contact-item:active {
+  background: #f1f5f9;
+  transform: scale(0.98);
+}
+
+.contact-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  flex: 1;
+}
+
+.contact-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.contact-number {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.contact-action {
+  color: #94a3b8;
+}
+
+/* Transfer Button */
+.action-section {
+  padding: 0 16px 20px;
+}
+
+.transfer-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.transfer-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.transfer-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 360px) {
+  .amount-card,
+  .recipient-card,
+  .contacts-card {
+    margin: 0 12px 12px;
+    padding: 16px;
+  }
+  
+  .amount-input {
+    font-size: 28px;
+    width: 160px;
+  }
+  
+  .action-section {
+    padding: 0 12px 16px;
+  }
+}
+</style>

@@ -1,0 +1,454 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" text="" class="custom-back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="custom-title">Top Up Saldo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="topup-page">
+  <div class="topup-container">
+    <!-- Header Section -->
+    <div class="topup-header">
+      <div class="balance-info">
+        <p class="balance-label">Saldo Saat Ini</p>
+        <h1 class="current-balance">Rp {{ getCurrentBalance() | number:'1.0-0' }}</h1>
+      </div>
+      <div class="topup-illustration">
+        <div class="illustration-icon">💰</div>
+      </div>
+    </div>
+
+    <!-- Amount Section -->
+    <div class="amount-card">
+      <h2 class="section-title">Jumlah Top Up</h2>
+      
+      <div class="amount-input-section">
+        <div class="amount-input-container">
+          <span class="currency">Rp</span>
+          <input 
+            type="number" 
+            [(ngModel)]="topupAmount"
+            placeholder="0"
+            class="amount-input"
+            (input)="onAmountChange()"
+          >
+        </div>
+        
+        <div class="quick-amounts">
+          @for (option of quickAmounts; track option.amount) {
+            <button 
+              class="quick-amount-btn"
+              [class.active]="topupAmount === option.amount"
+              (click)="selectAmount(option.amount)"
+            >
+              <span class="amount-text">Rp {{ option.amount / 1000 }}K</span>
+              <span class="amount-label">{{ option.label }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="payment-card">
+      <h2 class="section-title">Metode Pembayaran</h2>
+      <div class="payment-options">
+        <div 
+          class="payment-option"
+          [class.selected]="paymentMethod === 'gopay'"
+          (click)="selectPaymentMethod('gopay')"
+        >
+          <div class="payment-icon">
+            <div class="gopay-icon">G</div>
+          </div>
+          <div class="payment-info">
+            <h3 class="payment-name">GoPay</h3>
+            <p class="payment-desc">Saldo GoPay</p>
+          </div>
+          <div class="payment-check">
+            <div class="check-circle" [class.checked]="paymentMethod === 'gopay'"></div>
+          </div>
+        </div>
+
+        <div 
+          class="payment-option"
+          [class.selected]="paymentMethod === 'bank'"
+          (click)="selectPaymentMethod('bank')"
+        >
+          <div class="payment-icon">
+            <div class="bank-icon">🏦</div>
+          </div>
+          <div class="payment-info">
+            <h3 class="payment-name">Transfer Bank</h3>
+            <p class="payment-desc">BNI, BCA, Mandiri, dll</p>
+          </div>
+          <div class="payment-check">
+            <div class="check-circle" [class.checked]="paymentMethod === 'bank'"></div>
+          </div>
+        </div>
+
+        <div 
+          class="payment-option"
+          [class.selected]="paymentMethod === 'qris'"
+          (click)="selectPaymentMethod('qris')"
+        >
+          <div class="payment-icon">
+            <div class="qris-icon">📱</div>
+          </div>
+          <div class="payment-info">
+            <h3 class="payment-name">QRIS</h3>
+            <p class="payment-desc">Scan QR Code</p>
+          </div>
+          <div class="payment-check">
+            <div class="check-circle" [class.checked]="paymentMethod === 'qris'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="action-section">
+      <button 
+        class="topup-btn"
+        (click)="processTopup()"
+        [disabled]="!topupAmount"
+      >
+        <span class="btn-text">Top Up Sekarang</span>
+        <span class="btn-amount" *ngIf="topupAmount">Rp {{ topupAmount | number:'1.0-0' }}</span>
+      </button>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+.topup-page {
+  --background: #f8fafc;
+}
+
+/* Toolbar Styling */
+.custom-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e2e8f0 !important;
+}
+
+.custom-title {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+}
+
+.custom-back-button {
+  --color: #1e293b !important;
+}
+
+/* Topup Container */
+.topup-container {
+  padding: 0 16px;
+}
+
+/* Header Section */
+.topup-header {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.balance-label {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 0 0 8px 0;
+}
+
+.current-balance {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.illustration-icon {
+  font-size: 48px;
+  opacity: 0.9;
+}
+
+/* Cards */
+.amount-card,
+.payment-card {
+  background: #ffffff;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+}
+
+/* Amount Input */
+.amount-input-section {
+  text-align: center;
+}
+
+.amount-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.currency {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.amount-input {
+  border: none;
+  background: none;
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+  text-align: center;
+  width: 200px;
+  outline: none;
+}
+
+.amount-input::placeholder {
+  color: #cbd5e1;
+}
+
+.quick-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.quick-amount-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.quick-amount-btn.active {
+  background: #60a5fa;
+  border-color: #60a5fa;
+  color: #ffffff;
+}
+
+.amount-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+}
+
+.amount-label {
+  font-size: 11px;
+  opacity: 0.8;
+  color: black;
+}
+
+.quick-amount-btn.active .amount-text,
+.quick-amount-btn.active .amount-label {
+  color: #ffffff;
+}
+
+/* Payment Methods */
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+
+.payment-option.selected {
+  border-color: #60a5fa;
+  background: #f8fafc;
+}
+
+.payment-option:active {
+  transform: scale(0.98);
+}
+
+.payment-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gopay-icon {
+  width: 32px;
+  height: 32px;
+  background: #00aa13;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.bank-icon,
+.qris-icon {
+  font-size: 20px;
+}
+
+.payment-info {
+  flex: 1;
+}
+
+.payment-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.payment-desc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.payment-check {
+  flex-shrink: 0;
+}
+
+.check-circle {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.check-circle.checked {
+  border-color: #60a5fa;
+  background: #60a5fa;
+  position: relative;
+}
+
+.check-circle.checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Action Button */
+.action-section {
+  margin-top: 8px;
+  padding-bottom: 20px;
+}
+
+.topup-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.topup-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.topup-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-text {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btn-amount {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 360px) {
+  .topup-container {
+    padding: 0 12px;
+  }
+  
+  .amount-card,
+  .payment-card {
+    padding: 16px;
+  }
+  
+  .amount-input {
+    font-size: 28px;
+    width: 160px;
+  }
+  
+  .quick-amounts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .topup-header {
+    padding: 20px;
+  }
+  
+  .current-balance {
+    font-size: 24px;
+  }
+  
+  .illustration-icon {
+    font-size: 40px;
+  }
+}
+</style>

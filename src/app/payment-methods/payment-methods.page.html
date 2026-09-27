@@ -1,0 +1,158 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="Kembali" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Metode Pembayaran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    
+    <!-- Header Balance -->
+    <div class="balance-card">
+      <div class="balance-info">
+        <h2>Total Saldo Tersedia</h2>
+        <p class="balance-amount">Rp 3.750.000</p>
+        <p class="balance-detail">Tersebar di semua metode pembayaran</p>
+      </div>
+      <div class="balance-icon">
+        <ion-icon name="wallet"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Tombol Tambah Metode -->
+    <div class="add-button-section">
+      <ion-button expand="block" class="add-button" (click)="addPaymentMethod()">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Tambah Metode Pembayaran
+      </ion-button>
+    </div>
+
+    <!-- Metode Pembayaran Default -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Metode Utama</h2>
+        <p class="section-subtitle">Metode pembayaran yang paling sering digunakan</p>
+      </div>
+
+      <div class="payment-list">
+        <ion-card 
+          *ngFor="let method of paymentMethods" 
+          class="payment-card"
+          [class.default]="method.isDefault"
+          (click)="managePaymentMethod(method)"
+        >
+          <div class="card-content">
+            <div class="payment-header">
+              <div class="payment-icon" [style.background]="method.color">
+                <ion-icon [name]="method.icon"></ion-icon>
+              </div>
+              <div class="payment-info">
+                <h3>{{ method.name }}</h3>
+                <p>{{ method.number }}</p>
+                <div class="payment-chips">
+                  <ion-chip class="type-chip">
+                    {{ getPaymentMethodType(method.type) }}
+                  </ion-chip>
+                  <ion-chip *ngIf="method.isDefault" class="default-chip">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                    Default
+                  </ion-chip>
+                </div>
+              </div>
+            </div>
+            
+            <div class="payment-details">
+              <div *ngIf="method.balance" class="balance">
+                <span class="balance-label">Saldo:</span>
+                <span class="balance-amount">{{ formatBalance(method.balance) }}</span>
+              </div>
+              <div *ngIf="method.expiry" class="expiry">
+                <span class="expiry-label">Kadaluarsa:</span>
+                <span class="expiry-date">{{ method.expiry }}</span>
+              </div>
+            </div>
+
+            <div class="payment-actions">
+              <ion-button fill="clear" size="small" (click)="$event.stopPropagation(); managePaymentMethod(method)">
+                <ion-icon name="ellipsis-horizontal"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </ion-card>
+      </div>
+    </div>
+
+    <!-- Digital Wallets -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Dompet Digital</h2>
+        <p class="section-subtitle">Hubungkan dengan dompet digital favorit Anda</p>
+      </div>
+
+      <div class="wallet-list">
+        <ion-card 
+          *ngFor="let wallet of digitalWallets" 
+          class="wallet-card"
+          [class.connected]="wallet.connected"
+        >
+          <div class="card-content">
+            <div class="wallet-header">
+              <div class="wallet-icon" [style.background]="wallet.color">
+                <ion-icon [name]="wallet.icon"></ion-icon>
+              </div>
+              <div class="wallet-info">
+                <h3>{{ wallet.name }}</h3>
+                <p>{{ wallet.connected ? 'Terkoneksi' : 'Belum terkoneksi' }}</p>
+              </div>
+            </div>
+            
+            <div class="wallet-actions">
+              <ion-button 
+                fill="clear" 
+                size="small" 
+                [color]="wallet.connected ? 'danger' : 'primary'"
+                (click)="toggleDigitalWallet(wallet)"
+              >
+                {{ wallet.connected ? 'Putuskan' : 'Hubungkan' }}
+              </ion-button>
+            </div>
+          </div>
+        </ion-card>
+      </div>
+    </div>
+
+    <!-- Metode Lainnya -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Metode Lainnya</h2>
+        <p class="section-subtitle">Pilihan pembayaran tambahan</p>
+      </div>
+
+      <div class="other-methods">
+        <ion-item button class="method-item" *ngFor="let method of otherMethods">
+          <ion-icon [name]="method.icon" slot="start" class="method-icon"></ion-icon>
+          <ion-label>
+            <h3>{{ method.name }}</h3>
+            <p>{{ method.description }}</p>
+          </ion-label>
+          <ion-toggle 
+            slot="end" 
+            [checked]="method.enabled"
+            (ionChange)="toggleOtherMethod(method)"
+          ></ion-toggle>
+        </ion-item>
+      </div>
+    </div>
+
+    <!-- Info Keamanan -->
+    <div class="security-info">
+      <ion-icon name="shield-checkmark" class="security-icon"></ion-icon>
+      <h3>Pembayaran Aman</h3>
+      <p>Semua metode pembayaran dilindungi dengan enkripsi standar industri</p>
+    </div>
+
+  </div>
+</ion-content>

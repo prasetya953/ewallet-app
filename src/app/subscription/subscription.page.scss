@@ -1,0 +1,451 @@
+/* Toolbar Styles */
+ion-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e1e5e9;
+  --border-width: 0 0 1px 0;
+  --border-style: solid;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+ion-toolbar ion-title {
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+ion-back-button {
+  --color: #000000 !important;
+}
+
+/* Container */
+.container {
+  padding: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 100%;
+}
+
+/* Current Subscription */
+.current-subscription {
+  margin-bottom: 24px;
+}
+
+.subscription-card {
+  margin: 0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+  border: 2px solid #3b82f6;
+  background: linear-gradient(135deg, #ffffff, #f0f9ff);
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.plan-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.plan-info h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.plan-price {
+  margin: 0 0 4px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.plan-price span {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.expiry-date {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.plan-features {
+  margin-top: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.feature-check {
+  color: #10b981;
+  font-size: 1.1rem;
+}
+
+.feature-item span {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+/* Benefits Section */
+.benefits-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.section-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0 0 20px 0;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.benefit-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f5f9;
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+}
+
+.benefit-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.benefit-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.benefit-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Plans Section */
+.plans-section {
+  margin-bottom: 32px;
+}
+
+.plans-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.plan-card {
+  margin: 0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid #f1f5f9;
+  background: white;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.plan-card.recommended {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #ffffff, #fefce8);
+  transform: scale(1.02);
+}
+
+.plan-card.popular {
+  border-color: #3b82f6;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.plan-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.plan-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.plan-title h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.recommended-text {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.plan-pricing {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.price {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.period {
+  margin: 0;
+  font-size: 1rem;
+  color: #64748b;
+}
+
+.plan-features-list {
+  margin-bottom: 24px;
+}
+
+.feature-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.feature-line.included {
+  opacity: 1;
+}
+
+.feature-line:not(.included) {
+  opacity: 0.5;
+}
+
+.feature-icon {
+  font-size: 1.1rem;
+  min-width: 20px;
+}
+
+.feature-icon.included {
+  color: #10b981;
+}
+
+.feature-icon:not(.included) {
+  color: #ef4444;
+}
+
+.feature-line span {
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* Billing Section */
+.billing-section {
+  margin-bottom: 32px;
+}
+
+.billing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.billing-card {
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.billing-content {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.billing-info {
+  flex: 1;
+}
+
+.billing-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.billing-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.billing-date {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.billing-invoice {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.billing-amount {
+  text-align: right;
+}
+
+.amount {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.billing-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+/* FAQ Section */
+.faq-section {
+  margin-bottom: 32px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-card {
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .subscription-card,
+  .plan-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  
+  .plan-pricing {
+    padding: 16px;
+  }
+  
+  .price {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .billing-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .billing-amount {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .billing-actions {
+    justify-content: flex-start;
+  }
+  
+  .plan-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .plan-icon {
+    margin-right: 0;
+  }
+}

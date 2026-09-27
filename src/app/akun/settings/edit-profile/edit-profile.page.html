@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ion-color-primary: #667eea;
+      --ion-color-primary-rgb: 102, 126, 234;
+      --ion-color-primary-contrast: #ffffff;
+      --ion-color-primary-contrast-rgb: 255, 255, 255;
+      --ion-color-primary-shade: #5a6fce;
+      --ion-color-primary-tint: #758bec;
+      
+      --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      --gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #1a1a1a;
+    }
+
+    ion-app {
+      background: #f8f9fa;
+    }
+
+    ion-header {
+      background: #f8f9fa;
+    }
+
+    ion-toolbar {
+      --background: #ffffff;
+      --color: #1a1a1a;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    ion-title {
+      color: #1a1a1a !important;
+      font-weight: 600;
+    }
+
+    ion-content {
+      --background: #f8f9fa;
+      --color: #1a1a1a;
+    }
+
+    .profile-header {
+      background: linear-gradient(90deg, #262726, #3d3f3e);
+      padding: 80px 20px 40px;
+      text-align: center;
+      color: white;
+      position: relative;
+      border-radius: 0 0 25px 25px;
+      margin-bottom: 20px;
+    }
+
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .edit-photo-btn {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gradient-accent);
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 10px 0 5px;
+      color: white;
+    }
+
+    .user-title {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 10px;
+    }
+
+    .content-wrapper {
+      background: #f8f9fa;
+      padding: 20px 0;
+    }
+
+    /* Personal Information Section */
+    .section {
+      padding: 0 20px;
+      margin: 25px 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      color: #1a1a1a; /* Changed to black */
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: white;
+      color: #1a1a1a;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--ion-color-primary);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    /* Menu Items */
+    .menu-list {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      background: white;
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-item:hover {
+      background: #f5f5f5;
+    }
+
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      background: #f5f5f5; /* Changed to light gray */
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: #1a1a1a; /* Changed to black */
+      font-size: 16px;
+    }
+
+    .menu-content {
+      flex: 1;
+    }
+
+    .menu-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .menu-desc {
+      font-size: 13px;
+      color: #666666;
+    }
+
+    .menu-arrow {
+      color: #999999;
+      font-size: 14px;
+    }
+
+    /* Toggle Styles */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Plan Cards */
+    .plan-card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+      border: 2px solid #e0e0e0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .plan-card:hover {
+      border-color: var(--ion-color-primary);
+      transform: translateY(-2px);
+    }
+
+    .plan-card.selected {
+      border-color: var(--ion-color-primary);
+      background: var(--gradient-accent);
+      color: white;
+    }
+
+    .plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .plan-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: black;
+    }
+
+    .plan-price {
+      font-weight: 800;
+      font-size: 20px;
+      color: black;
+    }
+
+    .plan-card.selected .plan-price {
+      color: black
+    }
+
+    .plan-details {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .plan-card.selected .plan-details {
+      color: black;
+    }
+
+    .popular-badge {
+      background: #10b981;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      padding: 0 20px;
+      margin: 30px 0;
+      display: flex;
+      gap: 15px;
+    }
+
+    .save-btn {
+      flex: 2;
+      background: var(--gradient-accent);
+      color: black;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .save-btn:active {
+      transform: translateY(0);
+    }
+
+    .save-btn.loading {
+      background: #4a5568;
+      cursor: not-allowed;
+    }
+
+    .cancel-btn {
+      flex: 1;
+      background: transparent;
+      color: #666666;
+      border: 2px solid #e0e0e0;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cancel-btn:hover {
+      background: #f5f5f5;
+      border-color: #d0d0d0;
+    }
+
+    /* Success Message */
+    .success-message {
+      background: #10b981;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin: 0 20px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideDown 0.3s ease;
+      display: none;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-header {
+        padding: 60px 20px 30px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/tabs/akun" text="Back"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Edit Profile</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen scroll-y="true">
+      <!-- Success Message -->
+      <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        Profile updated successfully!
+      </div>
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="avatar-container">
+          <img src="/assets/gambar/mobistiq.png" 
+               alt="Profile" class="avatar">
+          <button class="edit-photo-btn">
+            <i class="fas fa-camera"></i>
+          </button>
+        </div>
+        <h1 class="user-name">Mobistiq Mobile</h1>
+        <p class="user-title">Premium Member</p>
+      </div>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Personal Information Section -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-user"></i>
+            Personal Information
+          </h2>
+          
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="fullName" value="Mobistiq Mobile" placeholder="Enter your full name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" id="email" value="mobistiqmobile@example.com" placeholder="Enter your email">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" id="phone" value="+62 839 9387 9738" placeholder="Phone number">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Birth</label>
+              <input type="date" class="form-input" id="dob" value="2025-10-15">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-input" id="address" value="Beringin, Deli Serdang" placeholder="Your address">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input type="text" class="form-input" id="city" value="Medan" placeholder="City">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Postal Code</label>
+              <input type="text" class="form-input" id="postalCode" value="12345" placeholder="Postal code">
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Settings -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-cog"></i>
+            Account Settings
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-user-edit"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Account Details</div>
+                <div class="menu-desc">Update your account information</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-file-contract"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Documents</div>
+                <div class="menu-desc">Manage your uploaded documents</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Location Services</div>
+                <div class="menu-desc">Improve delivery accuracy</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end" checked></ion-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-university"></i>
+            Bank Details
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Bank Accounts</div>
+                <div class="menu-desc">3 accounts connected</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Activities Notifications</div>
+                <div class="menu-desc">Payment, Travel and other activities</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end" checked></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Email Notifications</div>
+                <div class="menu-desc">Receive updates via email</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end" checked></ion-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-shield-alt"></i>
+            Security
+          </h2>
+          
+          <div class="menu-list">
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-fingerprint"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Biometric Login</div>
+                <div class="menu-desc">Sign in with fingerprint or face ID</div>
+              </div>
+              <div class="toggle-container">
+                <ion-toggle slot="end"></ion-toggle>
+              </div>
+            </div>
+
+            <div class="menu-item">
+              <div class="menu-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Change Password</div>
+                <div class="menu-desc">Update your security password</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription Plans -->
+        <div class="section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-crown"></i>
+            Subscription Plans
+          </h2>
+          
+          <div class="plan-card selected">
+            <div class="plan-header">
+              <div class="plan-title">Premium Plan <span class="popular-badge">POPULAR</span></div>
+              <div class="plan-price">$24.00/mo</div>
+            </div>
+            <div class="plan-details">for 3 Months • ALL INTEREST (25% APR)</div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-header">
+              <div class="plan-title">Business Plan</div>
+              <div class="plan-price">$42.00/mo</div>
+            </div>
+            <div class="plan-details">for 6 Months • ALL INTEREST (25% APR)</div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-header">
+              <div class="plan-title">Enterprise Plan</div>
+              <div class="plan-price">$49.00/mo</div>
+            </div>
+            <div class="plan-details">for 12 Months • ALL INTEREST (25% APR)</div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons slide-up">
+          <button class="save-btn" id="saveButton" onclick="alert('Perubahan Propil Berhasil Disimpan')">
+            <i class="fas fa-save"></i>
+            Save Changes
+          </button>
+          <button class="cancel-btn" id="cancelButton">
+            Cancel
+          </button>
+        </div>
+
+        <div style="height: 40px;"></div>
+      </div>
+    </ion-content>
+  </ion-app>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const saveButton = document.getElementById('saveButton');
+      const cancelButton = document.getElementById('cancelButton');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Plan card selection
+      const planCards = document.querySelectorAll('.plan-card');
+      planCards.forEach(card => {
+        card.addEventListener('click', function() {
+          planCards.forEach(c => c.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+      });
+
+      // Edit photo button
+      const editPhotoBtn = document.querySelector('.edit-photo-btn');
+      editPhotoBtn.addEventListener('click', function() {
+        alert('Photo editor would open here');
+      });
+
+      // Save button functionality
+      saveButton.addEventListener('click', function() {
+        // Show loading state
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        this.classList.add('loading');
+        this.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+          // Show success message
+          successMessage.style.display = 'flex';
+          
+          // Reset button state
+          this.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+          this.classList.remove('loading');
+          this.disabled = false;
+          
+          // Hide success message after 3 seconds
+          setTimeout(() => {
+            successMessage.style.display = 'none';
+          }, 3000);
+          
+          console.log('Profile saved with data:', {
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            dob: document.getElementById('dob').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            postalCode: document.getElementById('postalCode').value
+          });
+        }, 2000);
+      });
+
+      // Cancel button functionality
+      cancelButton.addEventListener('click', function() {
+        if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
+          // Reset form values to original
+          document.getElementById('fullName').value = 'Mobistiq Mobile';
+          document.getElementById('email').value = 'mobistiqmobile@example.com';
+          document.getElementById('phone').value = '+62 839 9387 9738';
+          document.getElementById('dob').value = '2025-10-15';
+          document.getElementById('address').value = 'Beringin, Deli Serdang';
+          document.getElementById('city').value = 'Medan';
+          document.getElementById('postalCode').value = '12345';
+          
+          // Reset plan selection
+          planCards.forEach(c => c.classList.remove('selected'));
+          planCards[0].classList.add('selected');
+          
+          console.log('Changes cancelled');
+        }
+      });
+
+      console.log('Profile page loaded successfully');
+    });
+  </script>
+</body>
+</html>

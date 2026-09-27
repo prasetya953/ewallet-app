@@ -1,0 +1,152 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Top Up E-Wallet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ewallet-content">
+  <div class="container">
+    <!-- Header -->
+    <ion-card class="header-card">
+      <ion-card-header>
+        <div class="header-content">
+          <div class="icon-wrapper">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <h1>Top Up E-Wallet</h1>
+          <p>Isi saldo dompet digital favorit Anda</p>
+        </div>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- E-Wallet Selection -->
+    <ion-card class="selection-card">
+      <ion-card-header>
+        <ion-card-title>Pilih E-Wallet</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="ewallet-grid">
+          <div 
+            *ngFor="let wallet of eWallets" 
+            class="ewallet-item" 
+            [class.selected]="selectedWallet === wallet.id"
+            (click)="selectedWallet = wallet.id"
+          >
+            <div class="wallet-logo">
+              <ion-icon [name]="wallet.icon"></ion-icon>
+            </div>
+            <p class="wallet-name">{{ wallet.name }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Account Input -->
+    <ion-card class="input-card" *ngIf="selectedWallet">
+      <ion-card-header>
+        <ion-card-title>Data Akun</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item class="form-item">
+          <ion-label position="stacked">Nomor HP/Email</ion-label>
+          <ion-input 
+            [(ngModel)]="accountNumber" 
+            type="text" 
+            [placeholder]="getPlaceholderText()"
+            class="custom-input"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item class="form-item">
+          <ion-label position="stacked">Nama Pemilik</ion-label>
+          <ion-input 
+            [(ngModel)]="accountName" 
+            type="text" 
+            placeholder="Masukkan nama lengkap"
+            class="custom-input"
+          ></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Amount Selection -->
+    <ion-card class="amount-card" *ngIf="selectedWallet && accountNumber">
+      <ion-card-header>
+        <ion-card-title>Pilih Nominal</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="amounts-grid">
+          <div 
+            *ngFor="let amount of amountOptions" 
+            class="amount-item" 
+            [class.selected]="selectedAmount === amount"
+            (click)="selectAmount(amount)"
+          >
+            <p class="amount">Rp{{ formatCurrency(amount) }}</p>
+          </div>
+        </div>
+
+        <!-- Custom Amount -->
+        <div class="custom-amount">
+          <ion-item class="form-item">
+            <ion-label position="stacked">Atau masukkan nominal custom</ion-label>
+            <ion-input 
+              [(ngModel)]="customAmount" 
+              type="number" 
+              placeholder="Min. Rp10.000"
+              (ionInput)="onCustomAmountChange()"
+              class="custom-input"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- Total Section -->
+        <div class="total-section" *ngIf="selectedAmount || customAmount">
+          <div class="total-amount">
+            <h3>Total Top Up</h3>
+            <h1 class="amount">Rp{{ formatCurrency(selectedAmount || customAmount) }}</h1>
+            <p class="amount-note">Saldo akan masuk dalam 1-5 menit</p>
+          </div>
+        </div>
+
+        <!-- Pay Button -->
+        <ion-button 
+          expand="block" 
+          class="pay-button" 
+          (click)="prosesTopUp()"
+          [disabled]="!selectedWallet || !accountNumber || !accountName || (!selectedAmount && !customAmount)"
+        >
+          <ion-icon slot="start" name="card-outline"></ion-icon>
+          Top Up Sekarang
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Information -->
+    <div class="info-section">
+      <h3>💳 Informasi Top Up</h3>
+      <div class="info-list">
+        <div class="info-item">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <span>Pastikan data akun sudah benar</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <span>Proses top up membutuhkan waktu 1-5 menit</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <span>Saldo akan langsung masuk ke akun e-wallet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,644 @@
+/* Variabel Warna - Tema Biru Modern */
+:root {
+  --primary-color: #3b82f6;
+  --primary-light: #dbeafe;
+  --primary-dark: #2563eb;
+  --secondary-color: #06b6d4;
+  --accent-color: #f59e0b;
+  --background-color: #f8fafc;
+  --surface-color: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border-color: #e2e8f0;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+}
+
+/* Global Styles */
+ion-header {
+  --background: var(--surface-color) !important;
+}
+
+ion-toolbar {
+  --background: var(--surface-color) !important;
+  --color: var(--text-primary) !important;
+}
+
+ion-content {
+  --background: var(--background-color) !important;
+  --color: var(--text-primary) !important;
+}
+
+.spp-content {
+  --background: var(--background-color) !important;
+  position: relative;
+}
+
+/* Background Pattern */
+.background-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.03;
+
+  .pattern-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--primary-color);
+    
+    &.pattern-1 {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      right: -100px;
+    }
+    
+    &.pattern-2 {
+      width: 200px;
+      height: 200px;
+      bottom: 100px;
+      left: -50px;
+    }
+    
+    &.pattern-3 {
+      width: 150px;
+      height: 150px;
+      top: 50%;
+      right: 20%;
+    }
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Timeline Progress */
+.timeline-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: var(--border-color);
+    z-index: 1;
+  }
+
+  .timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+
+    .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--surface-color);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+      
+      ion-icon {
+        font-size: 20px;
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+      }
+    }
+
+    .step-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    &.active {
+      .step-icon {
+        background: var(--gradient-primary);
+        border-color: var(--primary-color);
+        
+        ion-icon {
+          color: white;
+        }
+      }
+
+      .step-label {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/* Section Header */
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+
+  .section-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    ion-icon {
+      font-size: 24px;
+      color: white;
+    }
+  }
+
+  .section-title {
+    flex: 1;
+    
+    h2 {
+      margin: 0 0 4px 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+  }
+}
+
+/* Form Styles */
+.form-container {
+  background: transparent;
+}
+
+.input-group {
+  margin-bottom: 24px;
+
+  .input-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+
+    .label-icon {
+      font-size: 16px;
+      color: var(--primary-color);
+    }
+  }
+
+  .modern-input {
+    --background: var(--surface-color);
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --placeholder-color: var(--text-muted);
+    min-height: 52px;
+    font-size: 16px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+
+    &:focus-within {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  .input-feedback {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+}
+
+/* Select Styles */
+.select-wrapper {
+  position: relative;
+
+  .modern-select {
+    --background: var(--surface-color);
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 40px;
+    --placeholder-color: var(--text-muted);
+    min-height: 52px;
+    font-size: 16px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+
+    &:focus-within {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    font-size: 18px;
+  }
+}
+
+/* Search Bar */
+.search-box {
+  margin-bottom: 24px;
+}
+
+/* Schools List */
+.schools-list {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 24px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  .school-card {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    &.selected {
+      border-color: var(--primary-color);
+      background: var(--primary-light);
+    }
+
+    .school-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      .school-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        ion-icon {
+          font-size: 20px;
+          color: white;
+        }
+      }
+
+      .school-info {
+        flex: 1;
+        
+        .school-name {
+          margin: 0 0 4px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+        
+        .school-address {
+          margin: 0 0 8px 0;
+          font-size: 12px;
+          color: var(--text-secondary);
+        }
+        
+        .school-details {
+          display: flex;
+          gap: 8px;
+          
+          .detail-item {
+            padding: 4px 8px;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .selection-indicator {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      
+      ion-icon {
+        font-size: 20px;
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  
+  .empty-icon {
+    font-size: 64px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  
+  h3 {
+    margin: 0 0 8px 0;
+    color: var(--text-primary);
+  }
+  
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+/* Selected School Info */
+.selected-school-info {
+  margin-bottom: 24px;
+
+  .school-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--surface-color);
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+    
+    ion-icon {
+      font-size: 24px;
+      color: var(--primary-color);
+    }
+    
+    .school-details {
+      display: flex;
+      flex-direction: column;
+      
+      strong {
+        font-size: 14px;
+        color: var(--text-primary);
+        margin-bottom: 2px;
+      }
+      
+      span {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+
+/* Months Container */
+.months-container {
+  margin-bottom: 24px;
+
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .month-item {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
+
+    &:hover {
+      border-color: var(--primary-light);
+    }
+
+    &.selected {
+      border-color: var(--primary-color);
+      background: var(--primary-light);
+    }
+
+    .month-content {
+      .month-name {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+      
+      .month-price {
+        display: block;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--primary-color);
+      }
+    }
+
+    .month-check {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      
+      ion-icon {
+        font-size: 14px;
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+/* Payment Summary */
+.payment-summary {
+  background: var(--surface-color);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 2px solid var(--border-color);
+
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+
+    h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .total-amount {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+  }
+
+  .summary-details {
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .selected-months {
+      margin-top: 12px;
+      
+      .months-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+      
+      .months-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        
+        .month-tag {
+          background: var(--primary-color);
+          color: white;
+          padding: 4px 8px;
+          border-radius: 16px;
+          font-size: 11px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          
+          ion-icon {
+            font-size: 10px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .prev-button {
+    --border-color: var(--border-color);
+    --color: var(--text-secondary);
+    --border-radius: 12px;
+    height: 52px;
+    font-weight: 500;
+  }
+
+  .next-button, .pay-button {
+    --background: var(--gradient-primary);
+    --background-activated: var(--primary-dark);
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    height: 52px;
+    font-weight: 600;
+    font-size: 16px;
+
+    &:disabled {
+      --background: var(--border-color);
+      --box-shadow: none;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .timeline-progress {
+    padding: 0 10px;
+    
+    &::before {
+      left: 10px;
+      right: 10px;
+    }
+    
+    .timeline-step {
+      .step-icon {
+        width: 40px;
+        height: 40px;
+        
+        ion-icon {
+          font-size: 16px;
+        }
+      }
+      
+      .step-label {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .months-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}

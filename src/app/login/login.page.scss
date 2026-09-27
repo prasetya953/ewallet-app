@@ -1,0 +1,620 @@
+.login-content {
+  --background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.floating-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(96, 152, 200, 0.1) 0%, rgba(74, 123, 181, 0.05) 100%);
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Header */
+ion-toolbar.login-header {
+  --background: rgba(255, 255, 255, 0.95);
+  --border-color: #e3e8f0;
+  --border-width: 0 0 1px 0;
+  --border-style: solid;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(96, 152, 200, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.header-content ion-avatar {
+  margin-right: 12px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #6098c8;
+  background: white;
+  box-shadow: 0 2px 8px rgba(96, 152, 200, 0.2);
+}
+
+.header-content ion-title {
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Login Container - PERBAIKAN: Atur spacing lebih baik */
+.login-container {
+  position: relative;
+  z-index: 1;
+  padding: 30px 24px 20px 24px; /* Kurangi padding top, tambah bottom */
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Header Section - PERBAIKAN: Kurangi margin bottom */
+.login-header-section {
+  text-align: center;
+  margin-bottom: 30px; /* Kurangi dari 40px ke 30px */
+  animation: slideInDown 0.8s ease-out;
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px; /* Kurangi dari 24px ke 20px */
+}
+
+.avatar-glow {
+  position: absolute;
+  top: -6px; /* Kurangi dari -8px */
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  background: linear-gradient(135deg, #6098c8, #4a7bb5);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.profile-avatar {
+  width: 90px; /* Kurangi dari 100px */
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid white; /* Kurangi dari 4px */
+  box-shadow: 0 6px 25px rgba(96, 152, 200, 0.2);
+  position: relative;
+  z-index: 2;
+  background: white;
+  object-fit: cover;
+}
+
+.welcome-text {
+  font-size: 28px; /* Kurangi dari 32px */
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 6px 0; /* Kurangi margin bottom */
+  background: linear-gradient(135deg, #2c3e50, #6098c8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: #718096;
+  font-size: 15px; /* Sedikit perkecil */
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Login Form */
+.login-form {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 18px;
+  padding: 25px 20px; /* Kurangi padding */
+  box-shadow: 
+    0 8px 35px rgba(96, 152, 200, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: slideInUp 0.8s ease-out 0.2s both;
+  margin-bottom: 15px; /* Tambah margin bottom */
+}
+
+.form-item {
+  --background: rgba(248, 250, 252, 0.9);
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  margin-bottom: 18px; /* Kurangi dari 20px */
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.form-item:focus-within {
+  --background: rgba(255, 255, 255, 0.95);
+  border-color: #6098c8;
+  box-shadow: 
+    0 6px 20px rgba(96, 152, 200, 0.2),
+    0 2px 8px rgba(96, 152, 200, 0.1);
+  transform: translateY(-2px);
+}
+
+.input-icon {
+  color: #6098c8;
+  font-size: 18px; /* Sedikit perkecil */
+  margin-right: 10px;
+}
+
+.toggle-password {
+  color: #a0aec0;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.toggle-password:hover {
+  color: #6098c8;
+  background: rgba(96, 152, 200, 0.1);
+}
+
+.form-item ion-label {
+  font-weight: 600;
+  color: #2c3e50 !important;
+  margin-bottom: 6px; /* Kurangi dari 8px */
+  font-size: 13px; /* Perkecil sedikit */
+}
+
+.custom-input {
+  --padding-start: 0;
+  font-size: 15px; /* Sedikit perkecil */
+  font-weight: 500;
+  color: #2c3e50;
+  --placeholder-color: #a0aec0;
+  --placeholder-opacity: 1;
+}
+
+/* Error Messages */
+.error-message {
+  color: #e53e3e;
+  font-size: 11px; /* Perkecil */
+  margin: -10px 0 14px 16px; /* Kurangi margin */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.submitted .form-item:has(.custom-input:invalid) {
+  border-color: #e53e3e;
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin-top: 25px; /* Kurangi dari 32px */
+  animation: slideInUp 0.8s ease-out 0.4s both;
+}
+
+.login-btn {
+  --background: linear-gradient(135deg, #6098c8 0%, #4a7bb5 100%);
+  --background-activated: linear-gradient(135deg, #5588c0 0%, #426da9 100%);
+  --background-hover: linear-gradient(135deg, #6ba3d1 0%, #5588c0 100%);
+  --border-radius: 12px;
+  --box-shadow: 0 6px 20px rgba(96, 152, 200, 0.3);
+  height: 48px; /* Kurangi dari 50px */
+  font-weight: 600;
+  font-size: 15px; /* Sedikit perkecil */
+  --color: white;
+  margin-bottom: 10px; /* Kurangi dari 12px */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.login-btn:hover::before {
+  left: 100%;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+
+.reset-btn {
+  --border-radius: 12px;
+  --border-color: #6098c8;
+  --color: #6098c8;
+  --background-activated: rgba(96, 152, 200, 0.1);
+  --background-hover: rgba(96, 152, 200, 0.05);
+  height: 48px; /* Kurangi dari 50px */
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.reset-btn:active {
+  transform: scale(0.98);
+}
+
+/* Divider */
+.divider-section {
+  display: flex;
+  align-items: center;
+  margin: 22px 0; /* Kurangi dari 28px */
+  animation: slideInUp 0.8s ease-out 0.5s both;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+}
+
+.divider-text {
+  padding: 0 14px; /* Kurangi dari 16px */
+  color: #a0aec0;
+  font-size: 11px; /* Perkecil */
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* GOOGLE LOGIN SECTION */
+.social-login-section {
+  margin: 20px 0 12px 0; /* Kurangi margin */
+  animation: slideInUp 0.8s ease-out 0.6s both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.google-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px; /* Kurangi */
+  min-height: 46px; /* Kurangi dari 50px */
+  background: transparent;
+}
+
+/* Google Button Styling */
+#googleLoginBtn {
+  all: initial !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 280px !important; /* Kurangi dari 300px */
+}
+
+#googleLoginBtn iframe {
+  all: initial !important;
+  width: 100% !important;
+  height: 46px !important; /* Kurangi dari 50px */
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+#googleLoginBtn iframe:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Fallback Manual Button */
+.google-login-fallback {
+  --border-radius: 12px;
+  --border-color: #e0e0e0;
+  --border-width: 2px;
+  --border-style: solid;
+  --background: #ffffff;
+  --color: #757575;
+  --background-hover: #f8f9fa;
+  --background-activated: #f1f3f4;
+  height: 46px; /* Kurangi dari 50px */
+  font-weight: 600;
+  font-size: 14px; /* Perkecil */
+  text-transform: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 280px; /* Kurangi dari 300px */
+  margin: 0 auto;
+  display: none;
+}
+
+.google-login-fallback ion-icon {
+  color: #4285f4;
+  font-size: 18px; /* Perkecil */
+  margin-right: 6px;
+}
+
+.google-login-fallback:hover {
+  --background: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.google-button-wrapper:empty + .google-login-fallback,
+.google-login-fallback.show-fallback {
+  display: block;
+}
+
+/* Additional Options */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px; /* Kurangi dari 24px */
+  padding-top: 20px; /* Kurangi dari 24px */
+  border-top: 1px solid #f1f5f9;
+  animation: slideInUp 0.8s ease-out 0.7s both;
+}
+
+.remember-me {
+  --background: transparent;
+  --inner-padding-end: 0;
+}
+
+.remember-me ion-checkbox {
+  --border-color: #cbd5e0;
+  --border-radius: 4px;
+  --checkmark-color: white;
+  --background-checked: #6098c8;
+  --border-color-checked: #6098c8;
+  --size: 16px; /* Perkecil dari 18px */
+}
+
+.remember-me ion-label {
+  color: #4a5568;
+  font-size: 13px; /* Perkecil dari 14px */
+  font-weight: 500;
+}
+
+.forgot-password {
+  color: #6098c8;
+  text-decoration: none;
+  font-size: 13px; /* Perkecil dari 14px */
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 6px 4px; /* Kurangi padding */
+  border-radius: 4px;
+}
+
+.forgot-password:hover {
+  color: #4a7bb5;
+  text-decoration: underline;
+  background: rgba(96, 152, 200, 0.05);
+}
+
+/* Footer - PERBAIKAN: Atur posisi lebih rapat */
+.login-footer {
+  text-align: center;
+  margin-top: 15px; /* Kurangi dari 32px */
+  padding-top: 15px; /* Kurangi dari 24px */
+  border-top: 1px solid rgba(224, 232, 240, 0.5);
+  animation: slideInUp 0.8s ease-out 0.8s both;
+}
+
+.login-footer p {
+  color: #718096;
+  margin: 0;
+  font-size: 13px; /* Perkecil dari 14px */
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.signup-link {
+  color: #6098c8;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 2px 6px; /* Kurangi padding */
+  border-radius: 4px;
+  margin-left: 4px;
+  font-size: 13px; /* Sesuaikan dengan parent */
+}
+
+.signup-link:hover {
+  color: #4a7bb5;
+  text-decoration: underline;
+  background: rgba(96, 152, 200, 0.05);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(120deg); /* Kurangi movement */
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.25;
+    transform: scale(1.03); /* Kurangi scale */
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* Kurangi dari -30px */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px); /* Kurangi dari 40px */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Responsive Design - PERBAIKAN: Adjust untuk mobile */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 20px 16px 15px 16px; /* Adjust padding */
+  }
+  
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .welcome-text {
+    font-size: 26px; /* Sedikit perkecil */
+  }
+  
+  .subtitle {
+    font-size: 14px;
+  }
+  
+  .login-form {
+    padding: 20px 16px; /* Kurangi padding */
+    border-radius: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .login-btn,
+  .reset-btn {
+    height: 46px;
+    font-size: 14px;
+  }
+  
+  .login-options {
+    flex-direction: column;
+    gap: 12px; /* Kurangi gap */
+    align-items: flex-start;
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+  
+  .google-button-wrapper,
+  .google-login-fallback {
+    max-width: 100%;
+  }
+  
+  .login-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+  
+  .login-footer p {
+    font-size: 12px;
+  }
+}
+
+/* Custom Alert Styling */
+.custom-alert {
+  --backdrop-opacity: 0.6;
+}
+
+.custom-alert .alert-wrapper {
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.custom-alert .alert-head {
+  background: linear-gradient(135deg, #6098c8 0%, #4a7bb5 100%);
+  color: white;
+  padding: 16px;
+}
+
+.custom-alert .alert-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.custom-alert .alert-message {
+  color: #4a5568;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 16px;
+}
+
+.custom-alert .alert-button {
+  color: #6098c8;
+  font-weight: 600;
+  border-top: 1px solid #e2e8f0;
+}
+
+.custom-alert .alert-button:last-child {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 4px;
+}
+
+.mb-1 {
+  margin-bottom: 4px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}

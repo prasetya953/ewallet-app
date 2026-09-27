@@ -1,0 +1,129 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title class="header-title">Detail Transaksi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="gopay-theme">
+  <!-- Transaction Status Card -->
+  <div class="status-card" [class]="getStatusClass()">
+    <div class="status-icon">
+      <ion-icon [name]="getStatusIcon()" [color]="getStatusColor()"></ion-icon>
+    </div>
+    <h2 class="status-title">{{ getStatusText() }}</h2>
+    <h1 class="amount-large">Rp{{ formatCurrency(transaction?.amount) }}</h1>
+    <p class="transaction-date">{{ transaction?.date | date:'EEEE, dd MMMM yyyy' }}</p>
+  </div>
+
+  <!-- Transaction Details -->
+  <div class="details-card">
+    <h3 class="section-title">Detail Transaksi</h3>
+    
+    <div class="detail-item">
+      <div class="detail-label">Jenis Transaksi</div>
+      <div class="detail-value">{{ getTransactionTypeText() }}</div>
+    </div>
+    
+    <div class="detail-item">
+      <div class="detail-label">Kategori</div>
+      <div class="detail-value">{{ transaction?.category }}</div>
+    </div>
+    
+    <div class="detail-item">
+      <div class="detail-label">Deskripsi</div>
+      <div class="detail-value">{{ transaction?.description }}</div>
+    </div>
+    
+    <div class="detail-item">
+      <div class="detail-label">Waktu</div>
+      <div class="detail-value">{{ transaction?.date | date:'HH:mm:ss' }} WIB</div>
+    </div>
+    
+    @if (transaction?.recipient) {
+      <div class="detail-item">
+        <div class="detail-label">Penerima</div>
+        <div class="detail-value">{{ transaction?.recipient }}</div>
+      </div>
+    }
+    
+    @if (transaction?.sender) {
+      <div class="detail-item">
+        <div class="detail-label">Pengirim</div>
+        <div class="detail-value">{{ transaction?.sender }}</div>
+      </div>
+    }
+    
+    <div class="detail-item">
+      <div class="detail-label">Status</div>
+      <div class="detail-value status-badge" [class]="getStatusBadgeClass()">
+        {{ getStatusText() }}
+      </div>
+    </div>
+    
+    @if (transaction?.transactionId) {
+      <div class="detail-item">
+        <div class="detail-label">ID Transaksi</div>
+        <div class="detail-value transaction-id">{{ transaction?.transactionId }}</div>
+      </div>
+    }
+  </div>
+
+  <!-- Action Buttons -->
+  @if (transaction) {
+    <div class="action-buttons">
+      <ion-button expand="block" fill="outline" class="share-button" (click)="shareReceipt()">
+        <ion-icon name="share-outline" slot="start"></ion-icon>
+        Bagikan Bukti
+      </ion-button>
+      
+      <ion-button expand="block" fill="outline" class="download-button" (click)="downloadReceipt()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        Unduh PDF
+      </ion-button>
+      
+      <ion-button expand="block" fill="outline" color="danger" class="complaint-button" (click)="reportProblem()">
+        <ion-icon name="warning-outline" slot="start"></ion-icon>
+        Laporkan Masalah
+      </ion-button>
+    </div>
+  }
+
+  <!-- Related Transactions -->
+  @if (relatedTransactions.length > 0) {
+    <div class="related-transactions">
+      <h3 class="section-title">Transaksi Terkait</h3>
+      <div class="transactions-list">
+        @for (relatedTx of relatedTransactions; track relatedTx.id) {
+          <ion-item 
+            (click)="viewRelatedTransaction(relatedTx.id)"
+            button 
+            detail="true"
+            class="transaction-item"
+          >
+            <ion-avatar slot="start" [class]="getTransactionAvatarClass(relatedTx)">
+              <ion-icon 
+                [name]="getTransactionIcon(relatedTx.type)" 
+                [color]="getTransactionColor(relatedTx.type)"
+              ></ion-icon>
+            </ion-avatar>
+
+            <ion-label>
+              <h3 class="transaction-description">{{ relatedTx.description }}</h3>
+              <p class="transaction-date">{{ relatedTx.date | date:'dd MMM yyyy, HH:mm' }}</p>
+            </ion-label>
+            
+            <ion-text slot="end" [color]="getTransactionColor(relatedTx.type)">
+              <p class="transaction-amount">
+                {{ relatedTx.type === 'income' ? '+' : '-' }} 
+                Rp{{ formatCurrency(relatedTx.amount) }}
+              </p>
+            </ion-text>
+          </ion-item>
+        }
+      </div>
+    </div>
+  }
+</ion-content>

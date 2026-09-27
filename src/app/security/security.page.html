@@ -1,0 +1,218 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="Kembali" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Keamanan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    
+    <!-- Status Keamanan -->
+    <div class="security-status">
+      <div class="status-card">
+        <div class="status-icon">
+          <ion-icon name="shield-checkmark"></ion-icon>
+        </div>
+        <div class="status-info">
+          <h2>Status Keamanan</h2>
+          <p class="status-good">Akun Anda terlindungi dengan baik</p>
+          <p class="status-detail">3 dari 5 fitur keamanan aktif</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Autentikasi -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon auth">
+          <ion-icon name="lock-closed"></ion-icon>
+        </div>
+        <div class="section-info">
+          <h2 class="section-title">Autentikasi</h2>
+          <p class="section-subtitle">Pengaturan login dan verifikasi</p>
+        </div>
+      </div>
+      
+      <div class="menu-list">
+        <ion-item button class="menu-item" (click)="changePassword()">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="key" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Ubah Kata Sandi</h3>
+            <p>Perbarui kata sandi akun Anda</p>
+          </ion-label>
+          <ion-icon name="chevron-forward" slot="end" class="chevron"></ion-icon>
+        </ion-item>
+        
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="finger-print" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Autentikasi 2 Faktor</h3>
+            <p>Verifikasi dua langkah untuk login</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="is2FAEnabled" (ionChange)="toggle2FA()"></ion-toggle>
+        </ion-item>
+        
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="finger-print" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Login Biometrik</h3>
+            <p>Gunakan sidik jari atau face ID</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="isBiometricEnabled" (ionChange)="toggleBiometric()"></ion-toggle>
+        </ion-item>
+      </div>
+    </div>
+
+    <!-- Section Notifikasi -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon notification">
+          <ion-icon name="notifications"></ion-icon>
+        </div>
+        <div class="section-info">
+          <h2 class="section-title">Notifikasi Keamanan</h2>
+          <p class="section-subtitle">Pemberitahuan aktivitas akun</p>
+        </div>
+      </div>
+      
+      <div class="menu-list">
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="log-in" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Notifikasi Login Baru</h3>
+            <p>Pemberitahuan login dari perangkat baru</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="isLoginNotificationsEnabled" (ionChange)="toggleLoginNotifications()"></ion-toggle>
+        </ion-item>
+        
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="card" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Notifikasi Transaksi</h3>
+            <p>Pemberitahuan untuk setiap transaksi</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="isTransactionNotificationsEnabled" (ionChange)="toggleTransactionNotifications()"></ion-toggle>
+        </ion-item>
+        
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="mail" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Notifikasi Email</h3>
+            <p>Pemberitahuan keamanan via email</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="isEmailNotificationsEnabled" (ionChange)="toggleEmailNotifications()"></ion-toggle>
+        </ion-item>
+
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="phone-portrait" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Notifikasi SMS</h3>
+            <p>Pemberitahuan penting via SMS</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="isSMSNotificationsEnabled" (ionChange)="toggleSMSNotifications()"></ion-toggle>
+        </ion-item>
+      </div>
+    </div>
+
+    <!-- Section Sesi & Aktivitas -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon session">
+          <ion-icon name="desktop"></ion-icon>
+        </div>
+        <div class="section-info">
+          <h2 class="section-title">Sesi & Aktivitas</h2>
+          <p class="section-subtitle">Kelola perangkat dan riwayat</p>
+        </div>
+      </div>
+      
+      <div class="menu-list">
+        <ion-item button class="menu-item" (click)="manageSessions()">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="desktop" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Sesi Aktif</h3>
+            <p>{{ activeSessions }} perangkat terhubung</p>
+          </ion-label>
+          <ion-icon name="chevron-forward" slot="end" class="chevron"></ion-icon>
+        </ion-item>
+        
+        <ion-item button class="menu-item" (click)="viewSecurityHistory()">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="time" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Riwayat Keamanan</h3>
+            <p>Lihat log aktivitas keamanan</p>
+          </ion-label>
+          <ion-icon name="chevron-forward" slot="end" class="chevron"></ion-icon>
+        </ion-item>
+
+        <ion-item button class="menu-item">
+          <div class="menu-icon-wrapper">
+            <ion-icon name="globe" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Pelacakan Aplikasi</h3>
+            <p>Izinkan pelacakan untuk pengalaman lebih baik</p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="isAppTrackingEnabled" (ionChange)="toggleAppTracking()"></ion-toggle>
+        </ion-item>
+      </div>
+    </div>
+
+    <!-- Section Tindakan Keamanan -->
+    <div class="section danger-section">
+      <div class="section-header">
+        <div class="section-icon danger">
+          <ion-icon name="warning"></ion-icon>
+        </div>
+        <div class="section-info">
+          <h2 class="section-title">Tindakan Keamanan</h2>
+          <p class="section-subtitle">Tindakan penting untuk keamanan akun</p>
+        </div>
+      </div>
+      
+      <div class="menu-list">
+        <ion-item button class="menu-item danger-item" (click)="logoutAllDevices()">
+          <div class="menu-icon-wrapper danger-icon">
+            <ion-icon name="log-out" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Keluar dari Semua Perangkat</h3>
+            <p>Keluar dari semua sesi yang aktif</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item button class="menu-item danger-item" (click)="deleteAccount()">
+          <div class="menu-icon-wrapper danger-icon">
+            <ion-icon name="trash" class="menu-icon"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>Hapus Akun</h3>
+            <p>Hapus permanen akun dan semua data</p>
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

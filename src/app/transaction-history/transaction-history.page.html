@@ -1,0 +1,217 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Riwayat Transaksi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="transaction-history-page">
+  <div class="filter-section">
+    <div class="filter-chips">
+      <ion-chip [class.active]="activeFilter === 'all'" (click)="setFilter('all')">
+        Semua
+      </ion-chip>
+      <ion-chip [class.active]="activeFilter === 'income'" (click)="setFilter('income')">
+        Pemasukan
+      </ion-chip>
+      <ion-chip [class.active]="activeFilter === 'expense'" (click)="setFilter('expense')">
+        Pengeluaran
+      </ion-chip>
+      <ion-chip [class.active]="activeFilter === 'transfer'" (click)="setFilter('transfer')">
+        Transfer
+      </ion-chip>
+    </div>
+  </div>
+
+  <div class="transaction-list" *ngIf="filteredTransactions.length > 0; else emptyState">
+    <ion-item 
+      *ngFor="let transaction of filteredTransactions" 
+      (click)="viewTransactionDetail(transaction.id)"
+      button
+    >
+      <ion-avatar slot="start" [class]="transaction.type === 'income' ? 'income' : 'expense'">
+        <ion-icon [name]="getTransactionIcon(transaction.type)"></ion-icon>
+      </ion-avatar>
+
+      <ion-label>
+        <h3>{{ transaction.description }}</h3>
+        <p class="date">{{ transaction.date | date:'dd MMM yyyy, HH:mm' }}</p>
+        <p class="category">{{ transaction.category }}</p>
+      </ion-label>
+      
+      <p class="amount" [class.income]="transaction.type === 'income'" [class.expense]="transaction.type === 'expense'">
+        {{ transaction.type === 'income' ? '+' : '-' }} 
+        Rp{{ formatCurrency(transaction.amount) }}
+      </p>
+    </ion-item>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">💸</div>
+      <h3>Belum ada transaksi</h3>
+      <p>Transaksi Anda akan muncul di sini</p>
+    </div>
+  </ng-template>
+</ion-content>
+
+<style>
+.transaction-history-page {
+  --background: #f7fafc;
+}
+
+/* PERBAIKAN: Toolbar putih dengan teks dan icon hitam */
+ion-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e1e5e9;
+  --border-width: 0 0 1px 0;
+  --border-style: solid;
+}
+
+ion-toolbar ion-title {
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+ion-back-button {
+  --color: #000000 !important;
+}
+
+ion-back-button::part(native) {
+  color: #000000 !important;
+}
+
+ion-back-button::part(icon) {
+  color: #000000 !important;
+}
+
+.filter-section {
+  background: white;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.filter-chips {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.filter-chips ion-chip {
+  --background: #f7fafc;
+  --color: #718096;
+  font-weight: 500;
+  font-size: 14px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.filter-chips ion-chip.active {
+  --background: #667eea;
+  --color: white;
+  border-color: #667eea;
+}
+
+.transaction-list ion-item {
+  --background: white;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  margin: 6px 16px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.transaction-list ion-item:active {
+  transform: scale(0.98);
+}
+
+.transaction-list ion-avatar {
+  width: 44px;
+  height: 44px;
+  background: #f7fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+}
+
+.transaction-list ion-avatar.income {
+  border-color: #48bb78;
+  background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+}
+
+.transaction-list ion-avatar.expense {
+  border-color: #f56565;
+  background: linear-gradient(135deg, #fed7d7, #feb2b2);
+}
+
+.transaction-list ion-avatar ion-icon {
+  font-size: 20px;
+}
+
+.transaction-list ion-label h3 {
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 4px 0;
+  font-size: 16px;
+}
+
+.transaction-list ion-label .date {
+  font-size: 13px;
+  color: #718096;
+  margin: 0 0 2px 0;
+}
+
+.transaction-list ion-label .category {
+  font-size: 12px;
+  color: #a0aec0;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.transaction-list .amount {
+  font-weight: 700;
+  font-size: 16px;
+  text-align: right;
+  margin: 0;
+}
+
+.transaction-list .amount.income {
+  color: #48bb78;
+}
+
+.transaction-list .amount.expense {
+  color: #f56565;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state .empty-icon {
+  font-size: 64px;
+  color: #cbd5e0;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #718096;
+  margin: 0 0 8px 0;
+}
+
+.empty-state p {
+  color: #a0aec0;
+  margin: 0;
+}
+</style>

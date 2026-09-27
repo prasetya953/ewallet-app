@@ -1,0 +1,339 @@
+// tabs.page.scss
+/* Reset semua background default Ionic */
+ion-tabs {
+  --background: #ffffff;
+  background: #ffffff;
+}
+
+ion-tab-bar {
+  --background: #ffffff;
+  --border: none;
+  background: #ffffff;
+  border: none;
+}
+
+.modern-tab-bar {
+  --background: #ffffff;
+  --border: none;
+  border-radius: 25px 25px 0 0;
+  height: 85px; /* Sedikit lebih tinggi untuk icon yang lebih besar */
+  padding: 0 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: visible;
+  border: none;
+  background: #ffffff;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%);
+  }
+}
+
+.tab-button {
+  --background: transparent;
+  --color: #666666;
+  --color-selected: #00c853;
+  position: relative;
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16px;
+  margin: 0 4px;
+  background: transparent;
+  
+  &::part(native) {
+    background: transparent;
+    border-radius: 16px;
+    padding: 10px 14px; /* Padding lebih besar */
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: none;
+  }
+  
+  &.tab-selected {
+    --color: #00c853;
+    transform: translateY(-8px);
+    
+    .tab-content {
+      transform: translateY(-3px);
+    }
+    
+    .active-indicator {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    
+    .tab-icon {
+      background: linear-gradient(135deg, #00c853, #00aa13);
+      box-shadow: 0 6px 20px rgba(0, 200, 83, 0.3);
+      
+      .icon {
+        color: #ffffff;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+    }
+    
+    .tab-label {
+      color: #00c853;
+      font-weight: 700;
+    }
+  }
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px; /* Gap lebih besar */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-icon {
+  width: 32px; /* Lebih besar */
+  height: 32px; /* Lebih besar */
+  border-radius: 12px; /* Sedikit lebih bulat */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  
+  .icon {
+    font-size: 20px; /* Icon lebih besar */
+    color: #666666;
+    transition: all 0.3s ease;
+  }
+}
+
+.tab-label {
+  font-size: 11px; /* Sedikit lebih besar */
+  font-weight: 600;
+  color: #666666;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.active-indicator {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 18px; /* Lebih lebar */
+  height: 3px; /* Lebih tebal */
+  background: linear-gradient(90deg, #00c853, #00aa13);
+  border-radius: 2px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(0, 200, 83, 0.3);
+}
+
+/* QR Center Button Styles */
+.qr-center-button {
+  position: absolute;
+  left: 50%;
+  top: -35px; /* Sedikit lebih tinggi */
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.qr-button-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-button {
+  --background: transparent;
+  --border-radius: 22px; /* Sedikit lebih bulat */
+  --box-shadow: none;
+  width: 70px; /* Lebih besar */
+  height: 70px; /* Lebih besar */
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0;
+  padding: 0;
+  
+  &::part(native) {
+    border-radius: 22px;
+    padding: 0;
+    animation: float 3s ease-in-out infinite;
+    background: transparent;
+    border: none;
+    box-shadow: 0 8px 25px rgba(0, 200, 83, 0.3);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    
+    &::part(native) {
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.4);
+    }
+  }
+}
+
+.qr-icon-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #30adfa 0%, #05abf8 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+    border-radius: 22px;
+  }
+}
+
+.qr-icon {
+  font-size: 34px; /* QR icon lebih besar */
+  color: white;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  position: relative;
+  z-index: 2;
+}
+
+.qr-glow-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px; /* Lebih besar */
+  height: 80px; /* Lebih besar */
+  background: linear-gradient(135deg, #30adfa 0%, #05abf8 100%);
+  border-radius: 50%;
+  filter: blur(15px);
+  opacity: 0.4;
+  z-index: 1;
+  animation: subtle-glow 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes subtle-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Hover Effects */
+.tab-button:not(.tab-selected):hover {
+  .tab-icon {
+    background: rgba(0, 200, 83, 0.1);
+    transform: scale(1.08); /* Efek hover lebih besar */
+    
+    .icon {
+      color: #00c853;
+    }
+  }
+  
+  .tab-label {
+    color: #00c853;
+  }
+}
+
+.qr-button:hover {
+  transform: translateY(-3px); /* Efek hover lebih tinggi */
+  
+  &::part(native) {
+    box-shadow: 0 12px 30px rgba(0, 200, 83, 0.4);
+  }
+}
+
+/* Fix tambahan untuk menghilangkan background hitam */
+:host {
+  background: #ffffff;
+}
+
+/* Pastikan tidak ada elemen yang memiliki background gelap */
+ion-tab-bar {
+  background: #ffffff !important;
+}
+
+ion-tabs {
+  background: #ffffff !important;
+}
+
+/* Responsive Design */
+@media (max-width: 360px) {
+  .modern-tab-bar {
+    height: 80px;
+    padding: 0 16px;
+  }
+  
+  .qr-button {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .qr-icon {
+    font-size: 32px;
+  }
+  
+  .tab-icon {
+    width: 30px;
+    height: 30px;
+    
+    .icon {
+      font-size: 18px;
+    }
+  }
+  
+  .tab-label {
+    font-size: 10px;
+  }
+  
+  .tab-button.tab-selected {
+    transform: translateY(-6px);
+  }
+}
+
+/* Pastikan tidak ada overflow yang memotong QR */
+ion-tabs {
+  overflow: visible;
+}
+
+.modern-tab-bar {
+  overflow: visible;
+}
+
+/* Tambahan untuk memastikan QR button tidak terpotong */
+:host {
+  overflow: visible;
+}
+
+ion-tab-bar {
+  contain: none;
+}

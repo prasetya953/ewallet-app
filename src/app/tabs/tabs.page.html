@@ -1,0 +1,39 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom" class="modern-tab-bar">
+    
+    <!-- Tab Beranda -->
+    <ion-tab-button tab="beranda" href="/tabs/beranda" class="tab-button">
+      <div class="tab-content">
+        <div class="tab-icon">
+          <ion-icon name="home" class="icon"></ion-icon>
+        </div>
+        <ion-label class="tab-label">Beranda</ion-label>
+      </div>
+      <div class="active-indicator"></div>
+    </ion-tab-button>
+
+    <!-- QR Scan Button di Tengah -->
+    <div class="qr-center-button">
+      <div class="qr-button-container">
+        <ion-button class="qr-button" (click)="openScan()">
+          <div class="qr-icon-wrapper">
+            <ion-icon name="scan-circle" class="qr-icon"></ion-icon>
+          </div>
+        </ion-button>
+        <div class="qr-glow-effect"></div>
+      </div>
+    </div>
+
+    <!-- Tab Akun -->
+    <ion-tab-button tab="akun" href="/tabs/akun" class="tab-button">
+      <div class="tab-content">
+        <div class="tab-icon">
+          <ion-icon name="person-circle" class="icon"></ion-icon>
+        </div>
+        <ion-label class="tab-label">Akun</ion-label>
+      </div>
+      <div class="active-indicator"></div>
+    </ion-tab-button>
+    
+  </ion-tab-bar>
+</ion-tabs>

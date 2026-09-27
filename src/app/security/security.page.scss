@@ -1,0 +1,376 @@
+/* Toolbar Styles */
+ion-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e1e5e9;
+  --border-width: 0 0 1px 0;
+  --border-style: solid;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+ion-toolbar ion-title {
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+ion-back-button {
+  --color: #000000 !important;
+}
+
+ion-back-button::part(native) {
+  color: #000000 !important;
+}
+
+ion-back-button::part(icon) {
+  color: #000000 !important;
+}
+
+/* Container */
+.container {
+  padding: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 100%;
+}
+
+/* Security Status */
+.security-status {
+  margin-bottom: 24px;
+}
+
+.status-card {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  color: white;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.status-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  font-size: 2rem;
+}
+
+.status-info h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.status-good {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.status-detail {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Section Styles */
+.section {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f1f5f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.danger-section {
+  border: 1px solid #fecaca;
+  background: linear-gradient(135deg, #fef2f2, #fecaca);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.section-icon.auth {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+.section-icon.notification {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+}
+
+.section-icon.session {
+  background: linear-gradient(135deg, #06b6d4, #22d3ee);
+}
+
+.section-icon.danger {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.section-info {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Menu List */
+.menu-list {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.menu-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  --background: white;
+  --background-hover: #f8fafc;
+  --background-activated: #f1f5f9;
+  --min-height: 72px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.danger-item {
+  --background: #fef2f2;
+  --background-hover: #fecaca;
+  --background-activated: #fca5a5;
+}
+
+.danger-item ion-label h3 {
+  color: #dc2626;
+}
+
+.danger-item ion-label p {
+  color: #ef4444;
+}
+
+/* Menu Icon */
+.menu-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  transition: all 0.3s ease;
+}
+
+.danger-icon {
+  background: linear-gradient(135deg, #fecaca, #fca5a5);
+}
+
+.menu-item:hover .menu-icon-wrapper {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  transform: scale(1.1);
+}
+
+.danger-item:hover .menu-icon-wrapper {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  color: #475569;
+  transition: all 0.3s ease;
+}
+
+.danger-icon .menu-icon {
+  color: #dc2626;
+}
+
+.menu-item:hover .menu-icon {
+  color: white;
+}
+
+/* Label Styles */
+.menu-item ion-label {
+  margin: 12px 0;
+}
+
+.menu-item ion-label h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover ion-label h3 {
+  color: #3b82f6;
+}
+
+.danger-item:hover ion-label h3 {
+  color: #dc2626;
+}
+
+.menu-item ion-label p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Chevron */
+.chevron {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  transition: all 0.3s ease;
+}
+
+.menu-item:hover .chevron {
+  color: #3b82f6;
+  transform: translateX(2px);
+}
+
+/* Toggle Styles */
+ion-toggle {
+  --background: #e2e8f0;
+  --background-checked: #3b82f6;
+  --handle-background: #ffffff;
+  --handle-background-checked: #ffffff;
+  --handle-width: 20px;
+  --handle-height: 20px;
+  --handle-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.security-status {
+  animation: slideIn 0.5s ease-out;
+}
+
+.section {
+  animation: slideIn 0.5s ease-out;
+}
+
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.2s; }
+.section:nth-child(4) { animation-delay: 0.3s; }
+.section:nth-child(5) { animation-delay: 0.4s; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .section {
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .status-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  
+  .status-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+  }
+  
+  .section-header {
+    margin-bottom: 16px;
+  }
+  
+  .section-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 1.3rem;
+  }
+  
+  .menu-item {
+    --min-height: 68px;
+    --padding-start: 14px;
+    --padding-end: 14px;
+  }
+  
+  .menu-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    margin-right: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-info h2 {
+    font-size: 1.2rem;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+  }
+  
+  .section-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .menu-item ion-label h3 {
+    font-size: 0.95rem;
+  }
+  
+  .menu-item ion-label p {
+    font-size: 0.8rem;
+  }
+}

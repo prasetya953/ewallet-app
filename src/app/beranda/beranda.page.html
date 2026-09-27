@@ -1,0 +1,249 @@
+<!-- beranda.page.html -->
+<ion-header [translucent]="true">
+  <ion-toolbar class="header-toolbar">
+    <ion-title class="header-title">Beranda</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="header-button" (click)="openNotifications()">
+        <ion-icon name="notifications-outline" class="header-icon"></ion-icon>
+      </ion-button>
+      <ion-button class="header-button" (click)="openScan()">
+        <ion-icon name="scan-outline" class="header-icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="gopay-theme">
+  <!-- Header Balance Section -->
+  <div class="balance-section">
+    <div class="balance-card" #saldoCard>
+      <div class="balance-header">
+        <div class="balance-info">
+          <ion-text color="light">
+            <p class="balance-label">Saldo Mobistiq Pay</p>
+            <h1 class="balance-amount" #balanceAmount *ngIf="showBalance">Rp{{ formatCurrency(currentBalance) }}</h1>
+            <h1 class="balance-amount" #balanceAmount *ngIf="!showBalance">•••••••</h1>
+          </ion-text>
+          <div class="coins-info">
+            <ion-text color="light">
+              <p class="coins-label">Coins</p>
+              <p class="coins-amount">{{ userCoins }}</p>
+            </ion-text>
+          </div>
+        </div>
+        <ion-button fill="clear" color="light" class="eye-button" (click)="toggleBalance()">
+          <ion-icon slot="icon-only" [name]="showBalance ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Grid -->
+  <div class="quick-actions">
+    <div class="action-grid">
+      <div class="action-item" (click)="sendMoney()">
+        <div class="action-icon send-money">
+          <div class="modern-icon">
+            <ion-icon name="paper-plane-outline"></ion-icon>
+          </div>
+        </div>
+        <p class="action-label">Kirim</p>
+      </div>
+
+      <div class="action-item" (click)="requestMoney()">
+        <div class="action-icon request-money">
+          <div class="modern-icon">
+            <ion-icon name="download-outline"></ion-icon>
+          </div>
+        </div>
+        <p class="action-label">Minta</p>
+      </div>
+
+      <div class="action-item" (click)="topUp()">
+        <div class="action-icon top-up">
+          <div class="modern-icon">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </div>
+        </div>
+        <p class="action-label">Top Up</p>
+      </div>
+
+      <div class="action-item" (click)="openScan()">
+        <div class="action-icon pay">
+          <div class="modern-icon">
+            <ion-icon name="qr-code-outline"></ion-icon>
+          </div>
+        </div>
+        <p class="action-label">Bayar</p>
+      </div>
+
+      <div class="action-item" (click)="openMoreActions()">
+        <div class="action-icon more">
+          <div class="modern-icon">
+            <ion-icon name="apps-outline"></ion-icon>
+          </div>
+        </div>
+        <p class="action-label">Lainnya</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promo Banner Hanya Gambar -->
+  <div class="promo-section">
+    <div class="promo-scroll-container">
+      <div class="promo-banner" *ngFor="let promo of promos" (click)="viewPromoDetail(promo)">
+        <img [src]="promo.image" [alt]="promo.title" class="promo-image">
+      </div>
+    </div>
+  </div>
+
+  <!-- Free Transfer -->
+  <div class="feature-card">
+    <div class="feature-header">
+      <div class="feature-info">
+        <h3>Transfer Gratis 100x/bulan</h3>
+        <p>Transfer uang ke bank mana pun secara instan.</p>
+      </div>
+      <div class="feature-badge">
+        <span>MURAH</span>
+      </div>
+    </div>
+    <ion-button expand="block" class="transfer-button" (click)="sendMoney()">
+      Coba Sekarang!
+    </ion-button>
+  </div>
+
+  <!-- Payment Features -->
+  <div class="payment-features">
+    <h3 class="section-title">Pembayaran & Top Up</h3>
+    <div class="features-grid">
+      <div class="feature-item" (click)="navigateToBPJS()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="medkit-outline"></ion-icon>
+          </div>
+        </div>
+        <p>BPJS</p>
+      </div>
+      
+      <div class="feature-item" (click)="navigateToListrik()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="flash-outline"></ion-icon>
+          </div>
+        </div>
+        <p>Listrik</p>
+      </div>
+      
+      <div class="feature-item" (click)="navigateToAir()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="water-outline"></ion-icon>
+          </div>
+        </div>
+        <p>Air</p>
+      </div>
+
+      <div class="feature-item" (click)="navigateToInternet()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="wifi-outline"></ion-icon>
+          </div>
+        </div>
+        <p>Internet</p>
+      </div>
+
+      <div class="feature-item" (click)="navigateToTV()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="tv-outline"></ion-icon>
+          </div>
+        </div>
+        <p>TV Kabel</p>
+      </div>
+
+      <div class="feature-item" (click)="navigateToSPP()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="school-outline"></ion-icon>
+          </div>
+        </div>
+        <p>SPP</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Up Features -->
+  <div class="payment-features">
+    <h3 class="section-title">Top Up & Pulsa</h3>
+    <div class="features-grid">
+      <div class="feature-item" (click)="navigateToGame()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="game-controller-outline"></ion-icon>
+          </div>
+        </div>
+        <p>Game</p>
+      </div>
+      
+      <div class="feature-item" (click)="navigateToEWallet()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+        </div>
+        <p>E-Wallet</p>
+      </div>
+      
+      <div class="feature-item" (click)="navigateToPulsaData()">
+        <div class="feature-icon">
+          <div class="modern-icon">
+            <ion-icon name="cellular-outline"></ion-icon>
+          </div>
+        </div>
+        <p>Pulsa & Data</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="recent-transactions">
+    <div class="transactions-header">
+      <h3>Transaksi Terbaru</h3>
+      <ion-button fill="clear" size="small" (click)="viewAllTransactions()">
+        Lihat Semua
+      </ion-button>
+    </div>
+    
+    <div class="transactions-list">
+      <ion-item 
+        *ngFor="let transaction of recentTransactions" 
+        (click)="viewTransactionDetail(transaction.id)"
+        button 
+        detail="true"
+        class="transaction-item"
+        #transactionItem
+      >
+        <ion-avatar slot="start" [class]="getTransactionAvatarClass(transaction)">
+          <ion-icon 
+            [name]="getTransactionIcon(transaction.category)" 
+            [color]="getTransactionColor(transaction.type)"
+          ></ion-icon>
+        </ion-avatar>
+
+        <ion-label>
+          <h3 class="transaction-description">{{ transaction.description }}</h3>
+          <p class="transaction-date">{{ transaction.date | date:'dd MMM yyyy, HH:mm' }}</p>
+          <p class="transaction-category">{{ transaction.category }}</p>
+        </ion-label>
+        
+        <ion-text slot="end" [color]="getTransactionColor(transaction.type)">
+          <p class="transaction-amount">
+            {{ transaction.type === 'income' ? '+' : '-' }} 
+            Rp{{ formatCurrency(transaction.amount) }}
+          </p>
+        </ion-text>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

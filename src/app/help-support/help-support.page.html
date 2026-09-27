@@ -1,0 +1,191 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/akun" text="Kembali"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Bantuan & Dukungan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    
+    <!-- Header Section -->
+    <div class="header-section">
+      <div class="help-icon">💬</div>
+      <h1>Butuh Bantuan?</h1>
+      <p>Kami siap membantu Anda 24/7</p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h2 class="section-title">Hubungi Kami</h2>
+      <p class="section-subtitle">Pilih cara tercepat untuk mendapatkan bantuan</p>
+      
+      <div class="contact-grid">
+        <!-- Chat Langsung -->
+        <div class="contact-card" (click)="openLiveChat()">
+          <div class="contact-content">
+            <div class="contact-icon chat-icon">
+              <ion-icon name="chatbubble-ellipses"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <h3>Chat Langsung</h3>
+              <p>Dapatkan bantuan instan melalui chat</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telepon -->
+        <div class="contact-card" (click)="callSupport()">
+          <div class="contact-content">
+            <div class="contact-icon phone-icon">
+              <ion-icon name="call"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <h3>Telepon</h3>
+              <p>Hubungi customer service kami</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-card" (click)="sendEmail()">
+          <div class="contact-content">
+            <div class="contact-icon email-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <h3>Email</h3>
+              <p>Kirim pertanyaan via email</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="contact-card" (click)="openWhatsApp()">
+          <div class="contact-content">
+            <div class="contact-icon whatsapp-icon">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <h3>WhatsApp</h3>
+              <p>Chat via WhatsApp</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <div class="section-header">
+        <h2 class="section-title">Pertanyaan Umum</h2>
+        <p class="section-subtitle">Temukan jawaban cepat untuk pertanyaan umum</p>
+      </div>
+
+      <div class="faq-list">
+        <!-- Transfer -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="faq-icon">
+              <ion-icon name="arrow-redo"></ion-icon>
+            </div>
+            <span>Bagaimana cara melakukan transfer?</span>
+            <ion-icon name="chevron-down" class="chevron"></ion-icon>
+          </div>
+          <div class="faq-answer">
+            <p>Untuk melakukan transfer, buka menu Transfer, pilih tujuan transfer, masukkan nominal, dan konfirmasi dengan PIN Anda.</p>
+          </div>
+        </div>
+
+        <!-- Biaya Transfer -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="faq-icon">
+              <ion-icon name="cash"></ion-icon>
+            </div>
+            <span>Apa saja biaya transfer?</span>
+            <ion-icon name="chevron-down" class="chevron"></ion-icon>
+          </div>
+          <div class="faq-answer">
+            <p>Biaya transfer bervariasi tergantung jenis transfer dan bank tujuan. Transfer sesama bank gratis, antar bank dikenakan biaya Rp2.500-6.500.</p>
+          </div>
+        </div>
+
+        <!-- Top Up -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="faq-icon">
+              <ion-icon name="add-circle"></ion-icon>
+            </div>
+            <span>Bagaimana cara top up saldo?</span>
+            <ion-icon name="chevron-down" class="chevron"></ion-icon>
+          </div>
+          <div class="faq-answer">
+            <p>Top up saldo dapat dilakukan melalui ATM, Internet Banking, Mobile Banking, atau minimarket terdekat. Pilih menu Top Up dan ikuti petunjuknya.</p>
+          </div>
+        </div>
+
+        <!-- Verifikasi -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="faq-icon">
+              <ion-icon name="time"></ion-icon>
+            </div>
+            <span>Berapa lama proses verifikasi?</span>
+            <ion-icon name="chevron-down" class="chevron"></ion-icon>
+          </div>
+          <div class="faq-answer">
+            <p>Proses verifikasi biasanya memakan waktu 1-2 jam kerja. Untuk verifikasi dokumen mungkin membutuhkan waktu hingga 24 jam.</p>
+          </div>
+        </div>
+
+        <!-- Lupa PIN -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <div class="faq-icon">
+              <ion-icon name="lock-closed"></ion-icon>
+            </div>
+            <span>Bagaimana jika lupa PIN?</span>
+            <ion-icon name="chevron-down" class="chevron"></ion-icon>
+          </div>
+          <div class="faq-answer">
+            <p>Jika lupa PIN, Anda dapat menggunakan fitur "Lupa PIN" di halaman login. Sistem akan mengirimkan kode reset ke email atau nomor telepon Anda.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Section -->
+    <div class="emergency-section">
+      <div class="emergency-card">
+        <div class="emergency-content">
+          <div class="emergency-icon">🚨</div>
+          <div class="emergency-info">
+            <h3>Darurat?</h3>
+            <p>Laporkan masalah keamanan atau transaksi mencurigakan</p>
+          </div>
+          <ion-button fill="outline" color="danger" (click)="callSupport()">
+            Hubungi Segera
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="info-section">
+      <div class="info-card">
+        <div class="info-content">
+          <div class="info-icon">ℹ️</div>
+          <div class="info-text">
+            <h4>Informasi Layanan</h4>
+            <p>Customer service tersedia 24 jam setiap hari</p>
+            <p>Response time: &lt; 5 menit (chat), &lt; 30 menit (email)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

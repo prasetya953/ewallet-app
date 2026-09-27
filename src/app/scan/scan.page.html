@@ -1,0 +1,348 @@
+<div class="scan-container">
+  <!-- Header -->
+  <div class="header">
+    <button class="back-button" (click)="goBack()">
+      <div class="back-icon">←</div>
+    </button>
+    <h1 class="title">Scan QR Code</h1>
+    <div class="header-placeholder"></div>
+  </div>
+
+  <!-- Camera Area -->
+  <div class="camera-section">
+    <div class="camera-preview">
+      <video #videoElement class="camera-view" autoplay playsinline></video>
+      
+      <div class="scan-overlay">
+        <div class="scan-frame">
+          <div class="corner corner-tl"></div>
+          <div class="corner corner-tr"></div>
+          <div class="corner corner-bl"></div>
+          <div class="corner corner-br"></div>
+          <div class="scan-line"></div>
+        </div>
+        
+        <div class="scan-instruction">
+          <p>Arahkan QR code ke dalam area scan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Instructions -->
+  <div class="instructions">
+    <h3>Cara Menggunakan Scan</h3>
+    <div class="instruction-steps">
+      <div class="step">
+        <div class="step-icon">1</div>
+        <p>Izinkan akses kamera saat diminta</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">2</div>
+        <p>Arahkan QR code ke dalam kotak scan</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">3</div>
+        <p>Tunggu hingga terdeteksi otomatis</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="scan-controls">
+    <button class="scan-button" (click)="startCamera()" [disabled]="isLoading">
+      @if (isLoading) {
+        <span class="loading-spinner"></span>
+      }
+      {{ isLoading ? 'Memuat Kamera...' : 'Mulai Scan' }}
+    </button>
+  </div>
+</div>
+
+<style>
+.scan-container {
+  height: 100vh;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.back-button {
+  background: #f1f5f9;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #475569;
+}
+
+.back-icon {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.header-placeholder {
+  width: 40px;
+}
+
+/* Camera Section */
+.camera-section {
+  flex: 1;
+  background: #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.camera-preview {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  background: #0f172a;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.camera-view {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.scan-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.scan-frame {
+  width: 70%;
+  height: 70%;
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 16px;
+  position: relative;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(2px);
+}
+
+.corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #60a5fa;
+}
+
+.corner-tl {
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 8px 0 0 0;
+}
+
+.corner-tr {
+  top: -3px;
+  right: -3px;
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 8px 0 0;
+}
+
+.corner-bl {
+  bottom: -3px;
+  left: -3px;
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 8px;
+}
+
+.corner-br {
+  bottom: -3px;
+  right: -3px;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 8px 0;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+  animation: scan 2s ease-in-out infinite;
+  border-radius: 1px;
+}
+
+.scan-instruction {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.scan-instruction p {
+  margin: 0;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Instructions */
+.instructions {
+  background: white;
+  padding: 24px 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.instructions h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+}
+
+.instruction-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step-icon {
+  width: 24px;
+  height: 24px;
+  background: #60a5fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step p {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.4;
+}
+
+/* Controls */
+.scan-controls {
+  background: white;
+  padding: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.scan-button {
+  width: 100%;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.scan-button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animations */
+@keyframes scan {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 360px) {
+  .camera-preview {
+    max-width: 320px;
+  }
+  
+  .instructions {
+    padding: 20px 16px;
+  }
+  
+  .scan-controls {
+    padding: 16px;
+  }
+}
+</style>

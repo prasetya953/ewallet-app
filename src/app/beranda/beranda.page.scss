@@ -1,0 +1,563 @@
+/* beranda.page.scss */
+.gopay-theme {
+  --ion-background-color: #f8fafc;
+  --ion-text-color: #374151;
+}
+
+.header-toolbar {
+  --background: #ffffff;
+  --border-color: #f1f5f9;
+  
+  .header-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: #374151;
+  }
+  
+  .header-button {
+    --color: #6b7280;
+    
+    .header-icon {
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+}
+
+.balance-section {
+  background: url('/assets/gambar/bg.png');
+  padding: 25px 20px;
+  border-radius: 0 0 25px 25px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.balance-card {
+  position: relative;
+  z-index: 2;
+  
+  .balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    .balance-info {
+      flex: 1;
+      
+      .balance-label {
+        font-size: 15px;
+        opacity: 0.95;
+        margin: 0 0 10px 0;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: 0.3px;
+      }
+      
+      .balance-amount {
+        font-size: 30px;
+        font-weight: 800;
+        margin: 0 0 18px 0;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      }
+      
+      .coins-info {
+        .coins-label {
+          font-size: 13px;
+          opacity: 0.9;
+          margin: 0;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        
+        .coins-amount {
+          font-size: 17px;
+          font-weight: 700;
+          margin: 4px 0 0 0;
+          color: #ffffff;
+        }
+      }
+    }
+    
+    .eye-button {
+      --padding-start: 10px;
+      --padding-end: 10px;
+      margin-top: -6px;
+      color: #ffffff;
+      
+      ion-icon {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.quick-actions {
+  background: white;
+  margin: -15px 20px 20px 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+  padding: 22px;
+  position: relative;
+  z-index: 10;
+  border: 1px solid #e2e8f0;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  .action-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    
+    .modern-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      
+      ion-icon {
+        font-size: 26px;
+        font-weight: bold;
+        color: #3b82f6;
+      }
+    }
+  }
+  
+  .action-label {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0;
+    color: #374151;
+    letter-spacing: 0.2px;
+  }
+}
+
+/* Promo Section Hanya Gambar */
+.promo-section {
+  margin: 0 0 20px 0;
+  padding: 0 20px;
+}
+
+.promo-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 14px;
+  padding: 12px 0;
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.promo-banner {
+  flex: 0 0 85%;
+  scroll-snap-align: start;
+  background: white;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .promo-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/* Style untuk gambar promo yang berbeda */
+.promo-banner:nth-child(1) .promo-image {
+  object-position: center;
+}
+
+.promo-banner:nth-child(2) .promo-image {
+  object-position: center;
+}
+
+.promo-banner:nth-child(3) .promo-image {
+  object-position: center;
+}
+
+.promo-banner:nth-child(4) .promo-image {
+  object-position: center;
+}
+
+.spending-card, .feature-card {
+  background: white;
+  border-radius: 16px;
+  margin: 0 20px 20px 20px;
+  box-shadow: 0 4px 16px rgba(96, 165, 250, 0.08);
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.spending-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+    letter-spacing: 0.2px;
+  }
+}
+
+.spending-amount {
+  margin-bottom: 16px;
+  
+  h2 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: #374151;
+    letter-spacing: 0.3px;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 600;
+  }
+}
+
+.spending-progress {
+  .progress-bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #60a5fa, #3b82f6);
+      border-radius: 3px;
+    }
+  }
+}
+
+.feature-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  
+  .feature-info {
+    flex: 1;
+    
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #374151;
+      letter-spacing: 0.2px;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #6b7280;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+  }
+  
+  .feature-badge {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    padding: 6px 12px;
+    border-radius: 8px;
+    
+    span {
+      font-size: 11px;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+.transfer-button {
+  --border-radius: 12px;
+  --background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  height: 48px;
+  font-weight: 700;
+  text-transform: none;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.payment-features {
+  padding: 0 20px 20px 20px;
+  
+  .section-title {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+    letter-spacing: 0.2px;
+  }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  .feature-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    
+    .modern-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      
+      ion-icon {
+        font-size: 28px;
+        font-weight: bold;
+        color: #3b82f6;
+      }
+    }
+  }
+  
+  p {
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0;
+    color: #374151;
+    letter-spacing: 0.2px;
+  }
+}
+
+.recent-transactions {
+  background: white;
+  border-radius: 16px;
+  margin: 0 20px 20px 20px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #374151;
+    letter-spacing: 0.2px;
+  }
+}
+
+.transaction-item {
+  --background: #ffffff;
+  --color: #374151;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.transaction-item ion-avatar {
+  width: 46px;
+  height: 46px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transaction-item ion-avatar ion-icon {
+  font-size: 22px;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.transaction-item ion-label h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #374151 !important;
+  margin: 0 0 6px 0;
+}
+
+.transaction-item ion-label p {
+  font-size: 13px;
+  color: #6b7280 !important;
+  margin: 0 0 6px 0;
+  font-weight: 600;
+}
+
+.transaction-item .transaction-category {
+  font-size: 12px;
+  color: #9ca3af !important;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.transaction-amount {
+  font-size: 15px;
+  font-weight: 800;
+  color: #374151 !important;
+}
+
+.transaction-item ion-text[color="success"] .transaction-amount {
+  color: #10b981 !important;
+}
+
+.transaction-item ion-text[color="danger"] .transaction-amount {
+  color: #ef4444 !important;
+}
+
+.action-item:nth-child(1) .action-icon .modern-icon ion-icon {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.action-item:nth-child(2) .action-icon .modern-icon ion-icon {
+  color: #8b5cf6;
+  font-weight: bold;
+}
+
+.action-item:nth-child(3) .action-icon .modern-icon ion-icon {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.action-item:nth-child(4) .action-icon .modern-icon ion-icon {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.action-item:nth-child(5) .action-icon .modern-icon ion-icon {
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.feature-item:nth-child(1) .feature-icon .modern-icon ion-icon {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.feature-item:nth-child(2) .feature-icon .modern-icon ion-icon {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.feature-item:nth-child(3) .feature-icon .modern-icon ion-icon {
+  color: #06b6d4;
+  font-weight: bold;
+}
+
+.feature-item:nth-child(4) .feature-icon .modern-icon ion-icon {
+  color: #8b5cf6;
+  font-weight: bold;
+}
+
+.feature-item:nth-child(5) .feature-icon .modern-icon ion-icon {
+  color: #ec4899;
+  font-weight: bold;
+}
+
+.feature-item:nth-child(6) .feature-icon .modern-icon ion-icon {
+  color: #10b981;
+  font-weight: bold;
+}
+
+@media (max-width: 360px) {
+  .action-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  
+  .action-item .action-icon {
+    width: 52px;
+    height: 52px;
+    
+    .modern-icon ion-icon {
+      font-size: 24px;
+    }
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .feature-item .feature-icon {
+    width: 56px;
+    height: 56px;
+    
+    .modern-icon ion-icon {
+      font-size: 26px;
+    }
+  }
+  
+  .action-label,
+  .feature-item p {
+    font-size: 12px;
+  }
+  
+  .promo-banner {
+    flex: 0 0 82%;
+    
+    .promo-image {
+      height: 120px;
+    }
+  }
+}

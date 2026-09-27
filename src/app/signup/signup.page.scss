@@ -1,0 +1,150 @@
+.signup-content {
+  --background: #ffffff;
+}
+
+.container {
+  padding: 40px 24px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header-icon {
+  font-size: 64px;
+  color: #6098c8;
+  margin-bottom: 20px;
+}
+
+.header-section h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+}
+
+.header-section p {
+  color: #718096;
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.form-section {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px 24px;
+  box-shadow: 0 10px 40px rgba(96, 152, 200, 0.15);
+  border: 1px solid #e3e8f0;
+}
+
+.form-item {
+  --background: #f8fafc;
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin-bottom: 20px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.form-item:focus-within {
+  --background: #ffffff;
+  border-color: #6098c8;
+  box-shadow: 0 4px 15px rgba(96, 152, 200, 0.2);
+}
+
+.input-icon {
+  color: #6098c8;
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.toggle-password {
+  color: #a0aec0;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* PERBAIKAN: Warna teks input agar terlihat jelas */
+.form-item ion-label {
+  font-weight: 600;
+  color: #2c3e50 !important;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-item ion-input {
+  --padding-start: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3e50 !important; /* Warna teks gelap agar kontras */
+  --placeholder-color: #95a5a6; /* Warna placeholder yang lebih terang */
+  --placeholder-opacity: 1;
+}
+
+/* Style khusus untuk input yang aktif */
+.form-item:focus-within ion-label {
+  color: #6098c8 !important;
+}
+
+.form-item:focus-within ion-input {
+  color: #2c3e50 !important;
+}
+
+.error-message {
+  color: #f56565;
+  font-size: 12px;
+  margin: -15px 0 15px 15px;
+  font-weight: 500;
+}
+
+.submitted .form-item:has(ion-input:invalid) {
+  border-color: #f56565;
+  animation: shake 0.5s ease-in-out;
+}
+
+.signup-btn {
+  --background: linear-gradient(135deg, #6098c8, #4a7bb5);
+  --border-radius: 12px;
+  --box-shadow: 0 6px 20px rgba(96, 152, 200, 0.4);
+  height: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  --color: white;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #e3e8f0;
+}
+
+.login-link p {
+  color: #718096;
+  margin: 0;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #6098c8;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-link a:hover {
+  color: #4a7bb5;
+  text-decoration: underline;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}

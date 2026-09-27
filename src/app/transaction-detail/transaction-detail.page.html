@@ -1,0 +1,534 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="clean-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" text="" class="clean-back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="clean-title">Detail Transaksi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="clean-transaction-detail">
+  <div class="transaction-detail" *ngIf="transaction">
+    <!-- Header Amount Section -->
+    <div class="clean-amount-section" [class]="transaction.type">
+      <div class="amount-content">
+        <div class="amount-icon">
+          <ion-icon [name]="getTransactionIcon(transaction.category)"></ion-icon>
+        </div>
+        <ion-text>
+          <h1 class="clean-amount">
+            {{ transaction.type === 'income' ? '+' : '-' }} 
+            Rp{{ formatCurrency(transaction.amount) }}
+          </h1>
+        </ion-text>
+        <p class="amount-description">{{ transaction.description }}</p>
+        <ion-chip class="status-chip" [color]="getStatusColor(transaction.status)">
+          <ion-icon [name]="getStatusIcon(transaction.status)"></ion-icon>
+          <ion-label>{{ getStatusText(transaction.status) }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+
+    <!-- Transaction Info Cards -->
+    <div class="info-cards">
+      <!-- Basic Info Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <div class="section-number">1️⃣</div>
+          <h3 class="card-title">Informasi Transaksi</h3>
+        </div>
+        <div class="card-content">
+          <div class="info-row">
+            <div class="info-label">
+              <ion-icon name="calendar-outline" class="info-icon"></ion-icon>
+              <span>Tanggal & Waktu</span>
+            </div>
+            <div class="info-value">
+              <div class="time-info">
+                <div class="date">{{ transaction.date | date:'dd MMMM yyyy' }}</div>
+                <div class="time">{{ transaction.date | date:'HH:mm' }} WIB</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-row">
+            <div class="info-label">
+              <ion-icon name="swap-horizontal-outline" class="info-icon"></ion-icon>
+              <span>Tipe Transaksi</span>
+            </div>
+            <div class="info-value" [class]="transaction.type">
+              <span class="type-badge">{{ transaction.type === 'income' ? 'Pemasukan' : 'Pengeluaran' }}</span>
+            </div>
+          </div>
+          
+          <div class="info-row">
+            <div class="info-label">
+              <ion-icon name="pricetags-outline" class="info-icon"></ion-icon>
+              <span>Kategori</span>
+            </div>
+            <div class="info-value">
+              <span class="category-badge">{{ getCategoryText(transaction.category) }}</span>
+            </div>
+          </div>
+
+          <div class="info-row" *ngIf="transaction.recipient">
+            <div class="info-label">
+              <ion-icon name="person-outline" class="info-icon"></ion-icon>
+              <span>Penerima</span>
+            </div>
+            <div class="info-value recipient">
+              {{ transaction.recipient }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Timeline Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <div class="section-number">2️⃣</div>
+          <h3 class="card-title">Status Transaksi</h3>
+        </div>
+        <div class="card-content">
+          <div class="clean-timeline">
+            <div class="timeline-item completed">
+              <div class="timeline-marker">
+                <div class="timeline-dot">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+                <div class="timeline-line"></div>
+              </div>
+              <div class="timeline-content">
+                <p class="timeline-status">Transaksi Diproses</p>
+                <p class="timeline-time">{{ transaction.date | date:'HH:mm' }} WIB</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item completed">
+              <div class="timeline-marker">
+                <div class="timeline-dot">
+                  <ion-icon name="checkmark-outline"></ion-icon>
+                </div>
+                <div class="timeline-line"></div>
+              </div>
+              <div class="timeline-content">
+                <p class="timeline-status">Transaksi Berhasil</p>
+                <p class="timeline-time">{{ getCompletionTime(transaction.date) }} WIB</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-section" *ngIf="transaction.status === 'completed'">
+      <div class="section-number">3️⃣</div>
+      <ion-button expand="block" class="primary-action" fill="solid">
+        <ion-icon name="share-outline" slot="start"></ion-icon>
+        Bagikan Bukti Transfer
+      </ion-button>
+      <ion-button expand="block" class="secondary-action" fill="outline">
+        <ion-icon name="warning-outline" slot="start"></ion-icon>
+        Laporkan Masalah
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="clean-loading" *ngIf="!transaction">
+    <div class="loading-content">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+      </div>
+      <p>Memuat detail transaksi...</p>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+.clean-transaction-detail {
+  --background: #ffffff;
+}
+
+/* Clean Toolbar */
+.clean-toolbar {
+  --background: #ffffff;
+  --border-color: #e2e8f0;
+  --border-width: 0 0 1px 0;
+  --border-style: solid;
+  --color: #000000;
+}
+
+.clean-back-button {
+  --color: #000000;
+  --icon-font-size: 24px;
+}
+
+.clean-title {
+  color: #000000;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Clean Amount Section */
+.clean-amount-section {
+  background: #f8fafc;
+  padding: 40px 20px 30px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.clean-amount-section.income {
+  background: #f0fdf4;
+}
+
+.clean-amount-section.expense {
+  background: #fef2f2;
+}
+
+.amount-content {
+  color: #000000;
+}
+
+.amount-icon {
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 24px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clean-amount-section.income .amount-icon {
+  color: #10b981;
+  border-color: #10b981;
+}
+
+.clean-amount-section.expense .amount-icon {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.clean-amount {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  letter-spacing: -1px;
+  color: #000000;
+}
+
+.amount-description {
+  font-size: 16px;
+  margin: 0 0 16px 0;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.status-chip {
+  --background: #ffffff;
+  --color: #000000;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-chip ion-icon {
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+/* Info Cards */
+.info-cards {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f5f9;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.section-number {
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.info-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.info-icon {
+  font-size: 16px;
+  color: #64748b;
+  min-width: 16px;
+}
+
+.info-label span {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.info-value {
+  flex: 1;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.time-info {
+  text-align: right;
+}
+
+.date {
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.time {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.type-badge {
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.info-value.income .type-badge {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.info-value.expense .type-badge {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.category-badge {
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.recipient {
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+/* Clean Timeline */
+.clean-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 16px;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  background: #e2e8f0;
+  margin-top: 8px;
+  min-height: 20px;
+}
+
+.timeline-item:last-child .timeline-line {
+  display: none;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.timeline-status {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.timeline-time {
+  margin: 0;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Action Section */
+.action-section {
+  padding: 0 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-section .section-number {
+  font-size: 20px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.primary-action {
+  --background: #3b82f6;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  height: 50px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.primary-action ion-icon {
+  font-size: 18px;
+}
+
+.secondary-action {
+  --border-radius: 12px;
+  --color: #64748b;
+  --background: #ffffff;
+  --border-color: #d1d5db;
+  --border-width: 1px;
+  height: 50px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.secondary-action ion-icon {
+  font-size: 18px;
+}
+
+/* Clean Loading */
+.clean-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  color: #64748b;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-spinner {
+  margin-bottom: 16px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.clean-loading p {
+  margin: 0;
+  font-size: 16px;
+  color: #64748b;
+}
+
+/* Responsive Design */
+@media (max-width: 360px) {
+  .clean-amount {
+    font-size: 32px;
+  }
+  
+  .info-cards {
+    padding: 16px;
+  }
+  
+  .info-card {
+    padding: 16px;
+  }
+  
+  .action-section {
+    padding: 0 16px 40px;
+  }
+}
+</style>

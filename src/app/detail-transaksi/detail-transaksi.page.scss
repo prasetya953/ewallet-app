@@ -1,0 +1,221 @@
+.gopay-theme {
+  --background: #f8f9fa;
+}
+
+.header-toolbar {
+  --background: #00aa13;
+  --color: white;
+}
+
+.header-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+// Status Card
+.status-card {
+  margin: 16px;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(135deg, #00aa13, #00cc18);
+  color: white;
+  box-shadow: 0 4px 16px rgba(0, 170, 19, 0.3);
+
+  &.failed {
+    background: linear-gradient(135deg, #ff3b30, #ff625a);
+  }
+
+  &.pending {
+    background: linear-gradient(135deg, #ff9500, #ffaa33);
+  }
+}
+
+.status-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.status-title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.amount-large {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.transaction-date {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+// Details Card
+.details-card {
+  margin: 16px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detail-label {
+  font-size: 14px;
+  color: #666;
+  flex: 1;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-align: right;
+  flex: 1;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  
+  &.success {
+    background: #e6f7e8;
+    color: #00aa13;
+  }
+  
+  &.failed {
+    background: #ffe6e6;
+    color: #ff3b30;
+  }
+  
+  &.pending {
+    background: #fff3e0;
+    color: #ff9500;
+  }
+}
+
+.transaction-id {
+  font-family: monospace;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+// Action Buttons
+.action-buttons {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.share-button, .download-button, .complaint-button {
+  --border-radius: 12px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-weight: 600;
+}
+
+// Related Transactions
+.related-transactions {
+  margin: 16px;
+}
+
+.transactions-list {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+}
+
+.transaction-item ion-avatar {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &.income {
+    background: #e6f7e8;
+  }
+  
+  &.expense {
+    background: #ffe6e6;
+  }
+  
+  &.transfer {
+    background: #e6f0ff;
+  }
+}
+
+.transaction-item ion-avatar ion-icon {
+  font-size: 20px;
+}
+
+.transaction-description {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #1a1a1a;
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.transaction-amount {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .status-card {
+    margin: 12px;
+    padding: 20px;
+  }
+  
+  .details-card {
+    margin: 12px;
+    padding: 16px;
+  }
+  
+  .amount-large {
+    font-size: 24px;
+  }
+}

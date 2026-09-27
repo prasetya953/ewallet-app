@@ -1,0 +1,139 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Pulsa & Data</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="pulsa-content">
+  <div class="container">
+    <!-- Header -->
+    <ion-card class="header-card">
+      <ion-card-header>
+        <div class="header-content">
+          <div class="icon-wrapper">
+            <ion-icon name="cellular-outline"></ion-icon>
+          </div>
+          <h1>Pulsa & Paket Data</h1>
+          <p>Isi pulsa dan beli paket internet dengan mudah</p>
+        </div>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- Nomor HP -->
+    <ion-card class="input-card">
+      <ion-card-header>
+        <ion-card-title>Nomor Handphone</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <ion-item class="form-item">
+          <ion-label position="stacked">Masukkan Nomor HP</ion-label>
+          <ion-input 
+            [(ngModel)]="nomorHP" 
+            type="tel" 
+            placeholder="Contoh: 081234567890"
+            class="custom-input"
+            (ionInput)="detectOperator()"
+          ></ion-input>
+        </ion-item>
+
+        <div class="operator-info" *ngIf="operator">
+          <div class="operator-badge">
+            <ion-icon [name]="operatorIcon"></ion-icon>
+            <span>{{ operator }}</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Pilihan Pulsa -->
+    <ion-card class="options-card" *ngIf="nomorHP && operator">
+      <ion-card-header>
+        <ion-card-title>Pilih Pulsa</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="options-grid">
+          <div 
+            *ngFor="let pulsa of pulsaOptions" 
+            class="option-item" 
+            [class.selected]="selectedPulsa === pulsa.amount"
+            (click)="selectPulsa(pulsa.amount)"
+          >
+            <div class="option-content">
+              <p class="amount">Rp{{ formatCurrency(pulsa.amount) }}</p>
+              <p class="bonus" *ngIf="pulsa.bonus">{{ pulsa.bonus }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Paket Data -->
+    <ion-card class="options-card" *ngIf="nomorHP && operator">
+      <ion-card-header>
+        <ion-card-title>Paket Internet</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="options-grid">
+          <div 
+            *ngFor="let paket of dataPackages" 
+            class="option-item" 
+            [class.selected]="selectedPaket === paket.amount"
+            (click)="selectPaket(paket.amount)"
+          >
+            <div class="option-content">
+              <p class="package-name">{{ paket.name }}</p>
+              <p class="package-detail">{{ paket.detail }}</p>
+              <p class="amount">Rp{{ formatCurrency(paket.amount) }}</p>
+              <p class="validity">{{ paket.validity }}</p>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Total & Bayar -->
+    <div class="total-section" *ngIf="selectedPulsa || selectedPaket">
+      <div class="total-amount">
+        <h3>Total Pembayaran</h3>
+        <h1 class="amount">Rp{{ formatCurrency((selectedPulsa || 0) + (selectedPaket || 0)) }}</h1>
+        <p class="amount-note">Aktif dalam 1-3 menit setelah pembayaran</p>
+      </div>
+
+      <ion-button 
+        expand="block" 
+        class="pay-button" 
+        (click)="prosesPembelian()"
+      >
+        <ion-icon slot="start" name="call-outline"></ion-icon>
+        Beli Sekarang
+      </ion-button>
+    </div>
+
+    <!-- Information -->
+    <div class="info-section">
+      <h3>📞 Informasi</h3>
+      <div class="info-list">
+        <div class="info-item">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <span>Pastikan nomor HP sudah benar</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <span>Pulsa/paket aktif dalam 1-3 menit</span>
+        </div>
+        <div class="info-item">
+          <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+          <span>Untuk bantuan, hubungi customer service</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

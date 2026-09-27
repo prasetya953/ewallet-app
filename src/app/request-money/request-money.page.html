@@ -1,0 +1,472 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/beranda" text="" class="custom-back-button"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="custom-title">Minta Uang</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="request-page">
+  <div class="request-container">
+    <!-- Header Illustration -->
+    <div class="request-header">
+      <div class="illustration">
+        <div class="money-icon">💸</div>
+      </div>
+      <h1 class="page-title">Minta Uang</h1>
+      <p class="page-subtitle">Kirim permintaan uang ke teman atau keluarga</p>
+    </div>
+
+    <!-- Request Form -->
+    <div class="request-form">
+      <!-- Amount Card -->
+      <div class="form-card">
+        <h2 class="section-title">Jumlah Permintaan</h2>
+        <div class="amount-input-section">
+          <div class="amount-input-container">
+            <span class="currency">Rp</span>
+            <input 
+              type="number" 
+              [(ngModel)]="requestAmount"
+              placeholder="0"
+              class="amount-input"
+              (input)="onAmountChange()"
+            >
+          </div>
+          
+          <div class="quick-amounts">
+            @for (amount of quickAmounts; track amount) {
+              <button 
+                class="quick-amount-btn"
+                [class.active]="requestAmount === amount"
+                (click)="setQuickAmount(amount)"
+              >
+                Rp {{ amount / 1000 }}K
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Recipient Card -->
+      <div class="form-card">
+        <h2 class="section-title">Penerima</h2>
+        <div class="input-group">
+          <div class="input-field">
+            <div class="input-icon">
+              <ion-icon name="call-outline"></ion-icon>
+            </div>
+            <input 
+              type="tel"
+              [(ngModel)]="recipientNumber"
+              placeholder="Nomor handphone"
+              class="custom-input"
+            >
+          </div>
+          
+          <div class="input-field">
+            <div class="input-icon">
+              <ion-icon name="chatbubble-outline"></ion-icon>
+            </div>
+            <input 
+              type="text"
+              [(ngModel)]="notes"
+              placeholder="Pesan permintaan (opsional)"
+              class="custom-input"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Contacts -->
+      @if (recentContacts.length > 0) {
+        <div class="contacts-card">
+          <h2 class="section-title">Kontak Terbaru</h2>
+          <div class="contacts-list">
+            @for (contact of recentContacts; track contact.number) {
+              <div class="contact-item" (click)="selectContact(contact)">
+                <div class="contact-avatar">
+                  {{ contact.avatar }}
+                </div>
+                <div class="contact-info">
+                  <h3 class="contact-name">{{ contact.name }}</h3>
+                  <p class="contact-number">{{ contact.number }}</p>
+                </div>
+                <div class="contact-action">
+                  <ion-icon name="arrow-forward"></ion-icon>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Request Preview -->
+      @if (requestAmount > 0) {
+        <div class="preview-card">
+          <div class="preview-content">
+            <div class="preview-icon">📨</div>
+            <div class="preview-info">
+              <h3 class="preview-amount">Rp {{ requestAmount | number:'1.0-0' }}</h3>
+              <p class="preview-label">akan diminta dari {{ recipientNumber || 'nomor tujuan' }}</p>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Action Button -->
+      <div class="action-section">
+        <button 
+          class="request-btn"
+          (click)="processRequest()"
+          [disabled]="!requestAmount || !recipientNumber"
+        >
+          <ion-icon name="send-outline"></ion-icon>
+          Kirim Permintaan
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+.request-page {
+  --background: #f8fafc;
+}
+
+/* Toolbar Styling */
+.custom-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e2e8f0 !important;
+}
+
+.custom-title {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+}
+
+.custom-back-button {
+  --color: #1e293b !important;
+}
+
+/* Request Container */
+.request-container {
+  padding: 0 16px;
+}
+
+/* Header Section */
+.request-header {
+  text-align: center;
+  padding: 30px 0 20px;
+}
+
+.illustration {
+  margin-bottom: 16px;
+}
+
+.money-icon {
+  font-size: 64px;
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Form Cards */
+.form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+}
+
+/* Amount Input */
+.amount-input-section {
+  text-align: center;
+}
+
+.amount-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 8px;
+}
+
+.currency {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.amount-input {
+  border: none;
+  background: none;
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+  text-align: center;
+  width: 200px;
+  outline: none;
+}
+
+.amount-input::placeholder {
+  color: #cbd5e1;
+}
+
+.quick-amounts {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quick-amount-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-amount-btn.active {
+  background: #60a5fa;
+  border-color: #60a5fa;
+  color: #ffffff;
+}
+
+/* Input Fields */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #64748b;
+  z-index: 2;
+}
+
+.input-icon ion-icon {
+  font-size: 18px;
+}
+
+.custom-input {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 12px 12px 40px;
+  font-size: 15px;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.custom-input:focus {
+  border-color: #60a5fa;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.custom-input::placeholder {
+  color: #94a3b8;
+}
+
+/* Contacts Card */
+.contacts-card {
+  background: #ffffff;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+
+.contact-item:active {
+  background: #f1f5f9;
+  transform: scale(0.98);
+}
+
+.contact-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  flex: 1;
+}
+
+.contact-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 2px 0;
+}
+
+.contact-number {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.contact-action {
+  color: #94a3b8;
+}
+
+/* Preview Card */
+.preview-card {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.preview-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.preview-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.preview-info {
+  flex: 1;
+}
+
+.preview-amount {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.preview-label {
+  font-size: 13px;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Action Button */
+.action-section {
+  margin-top: 8px;
+}
+
+.request-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.request-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.request-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 360px) {
+  .request-container {
+    padding: 0 12px;
+  }
+  
+  .form-card,
+  .contacts-card {
+    padding: 16px;
+  }
+  
+  .amount-input {
+    font-size: 28px;
+    width: 160px;
+  }
+  
+  .money-icon {
+    font-size: 56px;
+  }
+  
+  .page-title {
+    font-size: 22px;
+  }
+}
+</style>

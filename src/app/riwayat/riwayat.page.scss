@@ -1,0 +1,52 @@
+/* Style Kustom yang Disediakan Pengguna */
+
+/* ion-header */
+ion-toolbar {
+    /* Menggunakan CSS Variable untuk latar belakang toolbar */
+    --background: #4F46E5; /* Biru Tua */
+    /* **PERBAIKAN:** Mengatur warna teks toolbar menjadi HITAM */
+    --color: #000000; 
+    font-family: poppnis; /* Font Kustom */
+}
+
+/* ion-content */
+ion-content {
+    --background: #18181B; /* Biru Muda/Abu-abu (Latar Belakang Halaman) */
+}
+
+/* ion-list dan ion-item (Card Transaksi) */
+ion-list {
+    --background: #E3F2FD; /* Pastikan list background sama dengan content atau transparan */
+    /* Menambahkan padding horizontal agar list item tidak menyentuh tepi layar */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Membuat item transaksi berwarna putih, seperti kartu */
+ion-item {
+    /* Menggunakan CSS Variable untuk latar belakang item */
+    --background: #FFFFFF; /* PUTIH */
+    /* Memberikan sedikit margin atau border radius agar terlihat seperti kartu */
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sedikit bayangan */
+    color: #000000;
+}
+
+ion-label, .font-medium text-lg, .text-sm text-gray-500 {
+    /* MEMASTIKAN TULISAN DI LABEL ADALAH HITAM */
+    color: #000000; 
+}
+
+/* Menyesuaikan warna pada Segment Button (Filter) agar serasi dengan toolbar */
+ion-segment {
+    --background: #1E88E5;
+}
+
+ion-segment-button {
+    --indicator-color: white;
+    /* Mengubah warna teks segment yang tidak aktif menjadi HITAM agar terlihat */
+    --color: #000000; 
+    /* Mengubah warna teks segment yang aktif menjadi HITAM agar terlihat */
+    --color-checked: #000000; 
+}

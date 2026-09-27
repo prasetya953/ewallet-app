@@ -1,0 +1,361 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="back-button">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="page-title">Bayar SPP</ion-title>
+    <div slot="end" class="header-actions">
+      <ion-button fill="clear" class="help-button" (click)="showHelp()">
+        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="spp-content">
+  <div class="background-pattern">
+    <div class="pattern-circle pattern-1"></div>
+    <div class="pattern-circle pattern-2"></div>
+    <div class="pattern-circle pattern-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Timeline Progress -->
+    <div class="timeline-progress">
+      <div class="timeline-step" [class.active]="currentStep >= 1">
+        <div class="step-icon">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </div>
+        <span class="step-label">Data Siswa</span>
+      </div>
+      <div class="timeline-step" [class.active]="currentStep >= 2">
+        <div class="step-icon">
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <span class="step-label">Lokasi</span>
+      </div>
+      <div class="timeline-step" [class.active]="currentStep >= 3">
+        <div class="step-icon">
+          <ion-icon name="school-outline"></ion-icon>
+        </div>
+        <span class="step-label">Sekolah</span>
+      </div>
+      <div class="timeline-step" [class.active]="currentStep >= 4">
+        <div class="step-icon">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <span class="step-label">Bulan</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Step 1: Student Info -->
+      <div class="content-section" *ngIf="currentStep === 1">
+        <div class="section-header">
+          <div class="section-icon">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </div>
+          <div class="section-title">
+            <h2>Data Siswa</h2>
+            <p>Masukkan informasi lengkap siswa</p>
+          </div>
+        </div>
+
+        <div class="form-container">
+          <div class="input-group">
+            <label class="input-label">
+              <ion-icon name="person-outline" class="label-icon"></ion-icon>
+              Nama Lengkap Siswa
+            </label>
+            <div class="input-wrapper">
+              <ion-input
+                [(ngModel)]="namaSiswa"
+                placeholder="Masukkan nama lengkap siswa"
+                class="modern-input"
+              ></ion-input>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">
+              <ion-icon name="id-card-outline" class="label-icon"></ion-icon>
+              Nomor Induk Siswa (NIS)
+            </label>
+            <div class="input-wrapper">
+              <ion-input
+                [(ngModel)]="nis"
+                placeholder="Contoh: 20240001"
+                class="modern-input"
+                maxlength="8"
+                (ionInput)="validateNIS()"
+              ></ion-input>
+            </div>
+            <div class="input-feedback" *ngIf="nis">
+              <ion-icon 
+                [name]="isValidNIS(nis) ? 'checkmark-circle' : 'alert-circle'" 
+                [color]="isValidNIS(nis) ? 'success' : 'warning'">
+              </ion-icon>
+              <span>{{ isValidNIS(nis) ? 'NIS valid' : 'NIS harus 8 digit angka' }}</span>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <ion-button 
+              class="next-button" 
+              expand="block"
+              (click)="nextStep()"
+              [disabled]="!namaSiswa || !nis || !isValidNIS(nis)">
+              Lanjutkan
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Location Selection -->
+      <div class="content-section" *ngIf="currentStep === 2">
+        <div class="section-header">
+          <div class="section-icon">
+            <ion-icon name="location-outline"></ion-icon>
+          </div>
+          <div class="section-title">
+            <h2>Pilih Lokasi</h2>
+            <p>Tentukan provinsi dan kabupaten sekolah</p>
+          </div>
+        </div>
+
+        <div class="form-container">
+          <div class="input-group">
+            <label class="input-label">
+              <ion-icon name="map-outline" class="label-icon"></ion-icon>
+              Provinsi
+            </label>
+            <div class="select-wrapper">
+              <ion-select
+                [(ngModel)]="selectedProvinsi"
+                (ionChange)="onProvinsiChange()"
+                interface="action-sheet"
+                class="modern-select"
+                placeholder="Pilih Provinsi"
+              >
+                <ion-select-option 
+                  *ngFor="let provinsi of provinsiList" 
+                  [value]="provinsi.id">
+                  {{ provinsi.nama }}
+                </ion-select-option>
+              </ion-select>
+              <ion-icon name="chevron-down-outline" class="select-arrow"></ion-icon>
+            </div>
+          </div>
+
+          <div class="input-group" *ngIf="selectedProvinsi">
+            <label class="input-label">
+              <ion-icon name="business-outline" class="label-icon"></ion-icon>
+              Kabupaten/Kota
+            </label>
+            <div class="select-wrapper">
+              <ion-select
+                [(ngModel)]="selectedKabupaten"
+                (ionChange)="onKabupatenChange()"
+                interface="action-sheet"
+                class="modern-select"
+                placeholder="Pilih Kabupaten/Kota"
+              >
+<ion-select-option 
+  *ngFor="let kabupaten of getKabupatenList()" 
+  [value]="kabupaten.id">
+  {{ kabupaten.nama }}
+</ion-select-option>
+              </ion-select>
+              <ion-icon name="chevron-down-outline" class="select-arrow"></ion-icon>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <ion-button 
+              class="prev-button" 
+              fill="outline" 
+              expand="block"
+              (click)="prevStep()">
+              <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+              Kembali
+            </ion-button>
+            <ion-button 
+              class="next-button" 
+              expand="block"
+              (click)="nextStep()"
+              [disabled]="!selectedProvinsi || !selectedKabupaten">
+              Lanjutkan
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: School Selection -->
+      <div class="content-section" *ngIf="currentStep === 3">
+        <div class="section-header">
+          <div class="section-icon">
+            <ion-icon name="school-outline"></ion-icon>
+          </div>
+          <div class="section-title">
+            <h2>Pilih Sekolah</h2>
+            <p>Pilih sekolah dari daftar yang tersedia</p>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <ion-searchbar
+            [(ngModel)]="searchQuery"
+            placeholder="Cari nama sekolah..."
+            class="modern-searchbar"
+            (ionInput)="filterSekolah()"
+          ></ion-searchbar>
+        </div>
+
+        <div class="schools-list">
+          <div 
+            *ngFor="let sekolah of filteredSekolahList"
+            class="school-card"
+            [class.selected]="selectedSekolah === sekolah.id"
+            (click)="selectSekolah(sekolah)">
+            <div class="school-header">
+              <div class="school-avatar">
+                <ion-icon name="school"></ion-icon>
+              </div>
+              <div class="school-info">
+                <h4 class="school-name">{{ sekolah.nama }}</h4>
+                <p class="school-address">{{ sekolah.alamat }}</p>
+                <div class="school-details">
+                  <span class="detail-item">{{ sekolah.jenjang }}</span>
+                  <span class="detail-item">Rp{{ formatCurrency(sekolah.sppAmount) }}/bulan</span>
+                </div>
+              </div>
+            </div>
+            <div class="selection-indicator">
+              <ion-icon name="checkmark-circle" *ngIf="selectedSekolah === sekolah.id"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="filteredSekolahList.length === 0">
+          <div class="empty-icon">
+            <ion-icon name="school-outline"></ion-icon>
+          </div>
+          <h3>Tidak ada sekolah ditemukan</h3>
+          <p>Ubah filter pencarian atau pilih lokasi lain</p>
+        </div>
+
+        <div class="action-buttons">
+          <ion-button 
+            class="prev-button" 
+            fill="outline" 
+            expand="block"
+            (click)="prevStep()">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Kembali
+          </ion-button>
+          <ion-button 
+            class="next-button" 
+            expand="block"
+            (click)="nextStep()"
+            [disabled]="!selectedSekolah">
+            Lanjutkan
+            <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Step 4: Month Selection -->
+      <div class="content-section" *ngIf="currentStep === 4">
+        <div class="section-header">
+          <div class="section-icon">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div class="section-title">
+            <h2>Pilih Bulan SPP</h2>
+            <p>Pilih bulan yang akan dibayar</p>
+          </div>
+        </div>
+
+        <!-- Selected School Info -->
+        <div class="selected-school-info" *ngIf="getSelectedSchool()">
+          <div class="school-badge">
+            <ion-icon name="school-outline"></ion-icon>
+            <div class="school-details">
+              <strong>{{ getSelectedSchool()?.nama }}</strong>
+              <span>{{ getSelectedSchool()?.jenjang }} • Rp{{ formatCurrency(getSelectedSchool()?.sppAmount || 0) }}/bulan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="months-container">
+          <div class="months-grid">
+            <div 
+              *ngFor="let month of months"
+              class="month-item"
+              [class.selected]="isMonthSelected(month.value)"
+              (click)="toggleMonth(month.value)">
+              <div class="month-content">
+                <span class="month-name">{{ month.name }}</span>
+                <span class="month-price">Rp{{ formatCurrency(getSPPAmount()) }}</span>
+              </div>
+              <div class="month-check" *ngIf="isMonthSelected(month.value)">
+                <ion-icon name="checkmark"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="payment-summary" *ngIf="bulan.length > 0">
+          <div class="summary-header">
+            <h3>Ringkasan Pembayaran</h3>
+            <div class="total-amount">Rp{{ formatCurrency(jumlah) }}</div>
+          </div>
+          <div class="summary-details">
+            <div class="detail-item">
+              <span>Jumlah Bulan</span>
+              <span>{{ bulan.length }} bulan</span>
+            </div>
+            <div class="detail-item">
+              <span>Biaya per Bulan</span>
+              <span>Rp{{ formatCurrency(getSPPAmount()) }}</span>
+            </div>
+            <div class="selected-months">
+              <span class="months-label">Bulan terpilih:</span>
+              <div class="months-tags">
+                <span *ngFor="let month of getSelectedMonths()" class="month-tag">
+                  {{ month }}
+                  <ion-icon name="close" (click)="removeMonth(month)"></ion-icon>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <ion-button 
+            class="prev-button" 
+            fill="outline" 
+            expand="block"
+            (click)="prevStep()">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Kembali
+          </ion-button>
+          <ion-button 
+            class="pay-button" 
+            expand="block"
+            (click)="prosesPembayaran()"
+            [disabled]="!isFormValid()">
+            <ion-icon slot="start" name="card-outline"></ion-icon>
+            Bayar SPP - Rp{{ formatCurrency(jumlah) }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,743 @@
+/* Force Light Theme */
+ion-header {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
+
+ion-toolbar {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+  --color: #1e293b !important;
+  color: #1e293b !important;
+  --border-color: #e2e8f0 !important;
+}
+
+ion-toolbar.custom-toolbar {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+  --color: #1e293b !important;
+  color: #1e293b !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Remove any dark theme styles */
+@media (prefers-color-scheme: dark) {
+  ion-header {
+    --background: #ffffff !important;
+    background: #ffffff !important;
+  }
+  
+  ion-toolbar {
+    --background: #ffffff !important;
+    background: #ffffff !important;
+    --color: #1e293b !important;
+    color: #1e293b !important;
+  }
+}
+
+/* Global Styles dengan tema terang dipaksa */
+:root {
+  --primary-color: #3b82f6;
+  --primary-light: #dbeafe;
+  --primary-dark: #1d4ed8;
+  --background-color: #f8fafc;
+  --surface-color: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border-color: #e2e8f0;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Force light theme on body and components */
+body {
+  --ion-background-color: #f8fafc !important;
+  --ion-text-color: #1e293b !important;
+}
+
+ion-app {
+  --ion-background-color: #f8fafc !important;
+  --ion-text-color: #1e293b !important;
+}
+
+ion-content {
+  --background: #f8fafc !important;
+  background: #f8fafc !important;
+  --color: #1e293b !important;
+  color: #1e293b !important;
+}
+
+.internet-content {
+  --background: #f8fafc !important;
+  background: #f8fafc !important;
+  position: relative;
+}
+
+/* Back Button Styles */
+.back-button {
+  --color: #1e293b !important;
+  color: #1e293b !important;
+}
+
+.back-button ion-icon {
+  color: #1e293b !important;
+}
+
+.help-button {
+  --color: #3b82f6 !important;
+  color: #3b82f6 !important;
+}
+
+.page-title {
+  font-weight: 700;
+  color: #1e293b !important;
+  font-size: 18px;
+}
+
+/* Sisanya tetap sama... */
+.background-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  overflow: hidden;
+  z-index: 0;
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    opacity: 0.1;
+    
+    &.shape-1 {
+      width: 200px;
+      height: 200px;
+      top: -100px;
+      right: -50px;
+    }
+    
+    &.shape-2 {
+      width: 150px;
+      height: 150px;
+      top: 50px;
+      left: -50px;
+    }
+    
+    &.shape-3 {
+      width: 100px;
+      height: 100px;
+      top: 150px;
+      right: 20%;
+    }
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  padding: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+  background: transparent;
+}
+
+/* Progress Steps */
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  background: transparent;
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: transparent;
+    
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .step-label {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    
+    &.active {
+      .step-number {
+        background: #3b82f6;
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+      }
+      
+      .step-label {
+        color: #3b82f6;
+        font-weight: 600;
+      }
+    }
+  }
+  
+  .step-divider {
+    width: 40px;
+    height: 2px;
+    background: #e2e8f0;
+    margin: 0 8px 16px;
+  }
+}
+
+/* Header Section */
+.header-section {
+  text-align: center;
+  margin-bottom: 32px;
+  background: transparent;
+  
+  .header-icon {
+    margin-bottom: 16px;
+    
+    .icon-circle {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: var(--shadow-lg);
+      
+      .wifi-icon {
+        font-size: 32px;
+        color: white;
+      }
+    }
+  }
+  
+  .main-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 8px 0;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+}
+
+/* Quick Providers */
+.quick-providers {
+  margin-bottom: 24px;
+  background: transparent;
+  
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+  }
+  
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    
+    .provider-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        border-color: #dbeafe;
+      }
+      
+      &.active {
+        border-color: #3b82f6;
+        background: #dbeafe;
+        
+        .provider-logo {
+          background: #3b82f6;
+          color: white;
+        }
+      }
+      
+      .provider-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 8px;
+        color: #64748b;
+        font-size: 20px;
+        
+        &.indihome { background: #e11d48; color: white; }
+        &.biznet { background: #059669; color: white; }
+        &.firstmedia { background: #7c3aed; color: white; }
+        &.myrepublic { background: #dc2626; color: white; }
+      }
+      
+      span {
+        font-size: 12px;
+        font-weight: 500;
+        color: #1e293b;
+      }
+    }
+  }
+}
+
+/* Payment Form Card */
+.payment-form-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  
+  .card-header {
+    padding: 24px 24px 16px;
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    
+    ion-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      
+      .title-icon {
+        color: #3b82f6;
+        font-size: 20px;
+      }
+    }
+    
+    .card-subtitle {
+      margin: 4px 0 0 0;
+      font-size: 14px;
+      color: #64748b;
+    }
+  }
+  
+  .card-content {
+    padding: 24px;
+    background: #ffffff;
+  }
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 24px;
+  background: transparent;
+  
+  .form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+}
+
+.custom-select-wrapper {
+  position: relative;
+  background: transparent;
+  
+  .custom-select {
+    --background: #f8fafc;
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 40px;
+    --placeholder-color: #64748b;
+    --placeholder-opacity: 1;
+    min-height: 48px;
+    font-weight: 500;
+    background: #f8fafc;
+  }
+  
+  .select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+  }
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  ion-icon {
+    font-size: 18px;
+    color: #3b82f6;
+  }
+}
+
+.input-with-icon {
+  position: relative;
+  background: transparent;
+  
+  .input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    z-index: 2;
+    font-size: 20px;
+  }
+  
+  .custom-input {
+    --background: #f8fafc;
+    --border-radius: 12px;
+    --padding-start: 48px;
+    --padding-end: 16px;
+    min-height: 48px;
+    font-weight: 500;
+    background: #f8fafc;
+  }
+}
+
+.input-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #64748b;
+  background: transparent;
+  
+  ion-icon {
+    font-size: 16px;
+  }
+}
+
+/* Package Grid */
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: transparent;
+  
+  .package-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    
+    &:hover {
+      border-color: #dbeafe;
+    }
+    
+    &.selected {
+      border-color: #3b82f6;
+      background: #dbeafe;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+    
+    .package-speed {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    
+    .package-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 4px;
+    }
+    
+    .package-desc {
+      font-size: 12px;
+      color: #64748b;
+    }
+  }
+}
+
+/* Bill Summary */
+.bill-summary {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 24px 0;
+  border: 1px solid #e2e8f0;
+  
+  .summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    
+    .provider-badge {
+      background: #3b82f6;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+  
+  .bill-details {
+    .bill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #64748b;
+    }
+    
+    .bill-divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 16px 0;
+    }
+    
+    .bill-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      
+      .total-amount {
+        color: #3b82f6;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+/* Action Buttons */
+.action-buttons {
+  background: transparent;
+  
+  .pay-button {
+    --background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    --background-activated: #1d4ed8;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    height: 52px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    
+    &:active {
+      transform: scale(0.98);
+    }
+    
+    &:disabled {
+      --background: #e2e8f0;
+      --box-shadow: none;
+    }
+  }
+  
+  .reset-button {
+    --border-color: #e2e8f0;
+    --color: #64748b;
+    --border-radius: 12px;
+    height: 44px;
+    font-weight: 500;
+  }
+}
+
+/* Features Section */
+.features-section {
+  margin-bottom: 24px;
+  background: transparent;
+  
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    
+    .feature-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid #e2e8f0;
+      
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+        font-size: 24px;
+        
+        &.instant {
+          background: #fef3c7;
+          color: #d97706;
+        }
+        
+        &.secure {
+          background: #d1fae5;
+          color: #059669;
+        }
+        
+        &.support {
+          background: #e0e7ff;
+          color: #4f46e5;
+        }
+      }
+      
+      h4 {
+        margin: 0 0 4px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 12px;
+        color: #64748b;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+/* Recent Transactions */
+.recent-transactions {
+  background: transparent;
+  
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 16px;
+  }
+  
+  .transactions-list {
+    .transaction-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #ffffff;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+      border: 1px solid #e2e8f0;
+      
+      .transaction-icon {
+        width: 40px;
+        height: 40px;
+        background: #dbeafe;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 20px;
+      }
+      
+      .transaction-details {
+        flex: 1;
+        
+        .transaction-provider {
+          font-size: 14px;
+          font-weight: 600;
+          color: #1e293b;
+          margin-bottom: 2px;
+        }
+        
+        .transaction-date {
+          font-size: 12px;
+          color: #64748b;
+        }
+      }
+      
+      .transaction-amount {
+        font-size: 14px;
+        font-weight: 700;
+        color: #3b82f6;
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .provider-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  
+  .package-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .progress-steps {
+    .step-divider {
+      width: 20px !important;
+    }
+  }
+}
+
+/* Ensure all cards have white background */
+ion-card {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}

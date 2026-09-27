@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Riwayat Transaksi</ion-title>
+    <ion-buttons slot="end">
+        <ion-button><ion-icon name="filter-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <!-- Segment Buttons untuk Filtering -->
+    <ion-segment 
+        [value]="segmentValue" 
+        (ionChange)="handleSegmentChange($event)" 
+        mode="md"
+    >
+      <ion-segment-button value="semua">
+        <ion-label>Semua</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="masuk">
+        <ion-label>Pemasukan</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="keluar">
+        <ion-label>Pengeluaran</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+  <div class="ion-padding">
+    
+    <!-- Pesan jika filter kosong -->
+    <div *ngIf="filteredTransactions.length === 0" class="ion-text-center ion-padding-top">
+        <ion-text color="medium">
+            <p>Belum ada transaksi di kategori ini.</p>
+        </ion-text>
+    </div>
+
+    <!-- List Transaksi yang telah difilter -->
+      <ion-item 
+        *ngFor="let item of filteredTransactions" 
+        (click)="goToDetail(item.id)" 
+        button 
+        detail="true"
+        class="transaction-item"
+      >
+        <!-- Ikon Transaksi Berdasarkan Kategori -->
+        <ion-avatar slot="start" [class]="item.tipe === 'masuk' ? 'bg-success-light' : 'bg-danger-light'">
+          <ion-icon 
+            [name]="getCategoryIcon(item.kategori)" 
+            [color]="item.tipe === 'masuk' ? 'success' : 'danger'" 
+          ></ion-icon>
+        </ion-avatar>
+
+        <ion-label>
+          <h3 class="font-medium text-lg">{{ item.deskripsi }}</h3>
+          <p class="text-sm text-gray-500">{{ item.tanggal }}</p>
+        </ion-label>
+        
+        <!-- Jumlah Transaksi (Menggunakan CurrencyPipe) -->
+        <ion-text slot="end" [color]="item.tipe === 'masuk' ? 'success' : 'danger'">
+          <p class="font-semibold text-lg">
+            {{ item.tipe === 'masuk' ? '+' : '-' }} {{ item.jumlah | currency:'IDR':'symbol':'1.0-0' }}
+          </p>
+        </ion-text>
+      </ion-item>
+    
+  </div>
+</ion-content>

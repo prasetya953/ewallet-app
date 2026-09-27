@@ -1,0 +1,287 @@
+// .bpjs-content {
+//   --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+//   .container {
+//     padding: 16px;
+//   }
+// }
+
+// .header-card {
+//   background: rgba(255, 255, 255, 0.15);
+//   backdrop-filter: blur(20px);
+//   border-radius: 25px;
+//   margin-bottom: 20px;
+//   border: 1px solid rgba(255, 255, 255, 0.2);
+  
+//   ion-card-header {
+//     padding: 30px 20px;
+    
+//     .header-content {
+//       text-align: center;
+//       color: white;
+      
+//       .icon-wrapper {
+//         width: 70px;
+//         height: 70px;
+//         background: rgba(255, 255, 255, 0.2);
+//         border-radius: 20px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         margin: 0 auto 15px;
+        
+//         ion-icon {
+//           font-size: 32px;
+//           color: white;
+//         }
+//       }
+      
+//       h1 {
+//         margin: 0 0 8px 0;
+//         font-size: 24px;
+//         font-weight: 700;
+//       }
+      
+//       p {
+//         margin: 0;
+//         font-size: 14px;
+//         opacity: 0.9;
+//       }
+//     }
+//   }
+// }
+
+// .payment-card {
+//   background: white;
+//   border-radius: 25px;
+//   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+//   margin-bottom: 20px;
+//   overflow: hidden;
+  
+//   ion-card-header {
+//     background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+//     color: white;
+//     padding: 25px;
+    
+//     ion-card-title {
+//       font-size: 20px;
+//       font-weight: 700;
+//       margin: 0;
+//     }
+//   }
+  
+//   ion-card-content {
+//     padding: 25px;
+//   }
+// }
+
+// .form-item {
+//   --background: #f8f9fa;
+//   --border-radius: 15px;
+//   --padding-start: 16px;
+//   --padding-end: 16px;
+//   --inner-padding-end: 0;
+//   margin-bottom: 20px;
+//   border: 2px solid transparent;
+//   transition: all 0.3s ease;
+  
+//   &:focus-within {
+//     --background: #ffffff;
+//     border-color: #667eea;
+//     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+//   }
+  
+//   ion-label {
+//     font-weight: 600;
+//     color: #333;
+//     margin-bottom: 8px;
+//   }
+  
+//   ion-input, ion-select {
+//     --padding-start: 0;
+//     font-weight: 500;
+//   }
+// }
+
+// .amount-section {
+//   text-align: center;
+//   margin: 30px 0;
+//   padding: 30px 20px;
+//   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+//   border-radius: 20px;
+//   color: white;
+//   position: relative;
+//   overflow: hidden;
+  
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+//   }
+  
+//   .amount-header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 15px;
+//     position: relative;
+//     z-index: 2;
+    
+//     h3 {
+//       margin: 0;
+//       font-size: 16px;
+//       font-weight: 600;
+//       opacity: 0.9;
+//     }
+    
+//     .badge {
+//       background: rgba(255, 255, 255, 0.2);
+//       padding: 6px 12px;
+//       border-radius: 20px;
+//       font-size: 12px;
+//       font-weight: 600;
+//     }
+//   }
+  
+//   .amount {
+//     margin: 0;
+//     font-size: 36px;
+//     font-weight: 800;
+//     position: relative;
+//     z-index: 2;
+//     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+//   }
+  
+//   .amount-note {
+//     margin: 8px 0 0 0;
+//     font-size: 13px;
+//     opacity: 0.8;
+//     position: relative;
+//     z-index: 2;
+//   }
+// }
+
+// .pay-button {
+//   --border-radius: 15px;
+//   --background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+//   --box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+//   --color: white;
+//   height: 55px;
+//   font-weight: 700;
+//   font-size: 16px;
+//   margin-top: 10px;
+//   transition: all 0.3s ease;
+  
+//   &:active {
+//     transform: scale(0.98);
+//   }
+  
+//   &:disabled {
+//     --background: #cccccc;
+//     --box-shadow: none;
+//   }
+// }
+
+// .info-section {
+//   background: rgba(255, 255, 255, 0.95);
+//   backdrop-filter: blur(20px);
+//   border-radius: 20px;
+//   padding: 25px;
+//   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+//   h3 {
+//     margin: 0 0 20px 0;
+//     font-size: 18px;
+//     font-weight: 700;
+//     color: #1a1a1a;
+//     display: flex;
+//     align-items: center;
+//     gap: 8px;
+//   }
+  
+//   .info-list {
+//     .info-item {
+//       display: flex;
+//       align-items: flex-start;
+//       gap: 12px;
+//       margin-bottom: 15px;
+      
+//       &:last-child {
+//         margin-bottom: 0;
+//       }
+      
+//       ion-icon {
+//         font-size: 18px;
+//         margin-top: 2px;
+//         flex-shrink: 0;
+//       }
+      
+//       span {
+//         font-size: 14px;
+//         color: #666;
+//         line-height: 1.4;
+//         flex: 1;
+//       }
+//     }
+//   }
+// }
+
+// // Animations
+// @keyframes slideInUp {
+//   from {
+//     opacity: 0;
+//     transform: translateY(40px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0);
+//   }
+// }
+
+// @keyframes float {
+//   0%, 100% {
+//     transform: translateY(0);
+//   }
+//   50% {
+//     transform: translateY(-5px);
+//   }
+// }
+
+// .header-card {
+//   animation: slideInUp 0.6s ease-out;
+// }
+
+// .payment-card {
+//   animation: slideInUp 0.8s ease-out;
+// }
+
+// .amount-section {
+//   animation: float 3s ease-in-out infinite;
+// }
+
+// .info-section {
+//   animation: slideInUp 1s ease-out;
+// }
+
+// // Responsive
+// @media (max-width: 360px) {
+//   .header-card ion-card-header {
+//     padding: 20px 15px;
+    
+//     .header-content h1 {
+//       font-size: 20px;
+//     }
+//   }
+  
+//   .amount-section .amount {
+//     font-size: 32px;
+//   }
+  
+//   .payment-card ion-card-content {
+//     padding: 20px;
+//   }
+// }

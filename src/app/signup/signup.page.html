@@ -1,0 +1,133 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="signup-content">
+  <div class="container">
+    <div class="header-section">
+      <ion-icon name="person-add-outline" class="header-icon"></ion-icon>
+      <h1>Join E-Wallet</h1>
+      <p>Create your account to start managing your finances</p>
+    </div>
+
+    <div class="form-section" [class.submitted]="submitted">
+      <ion-item class="form-item">
+        <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input
+          type="text"
+          [(ngModel)]="fullName"
+          placeholder="Enter your full name"
+          label="Full Name"
+          labelPlacement="stacked">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="!fullName && submitted">
+        ❌ Full name is required
+      </div>
+
+      <ion-item class="form-item">
+        <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input
+          type="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          label="Email Address"
+          labelPlacement="stacked">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="!email && submitted">
+        ❌ Email is required
+      </div>
+
+      <ion-item class="form-item">
+        <ion-icon name="call-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input
+          type="tel"
+          [(ngModel)]="phone"
+          placeholder="Enter your phone number"
+          label="Phone Number"
+          labelPlacement="stacked">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="!phone && submitted">
+        ❌ Phone number is required
+      </div>
+
+      <ion-item class="form-item">
+        <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input
+          type="text"
+          [(ngModel)]="username"
+          placeholder="Choose a username"
+          label="Username"
+          labelPlacement="stacked">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="!username && submitted">
+        ❌ Username is required
+      </div>
+
+      <ion-item class="form-item">
+        <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          placeholder="Create a password"
+          label="Password"
+          labelPlacement="stacked">
+        </ion-input>
+        <ion-icon 
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" 
+          slot="end" 
+          class="toggle-password"
+          (click)="togglePasswordVisibility()">
+        </ion-icon>
+      </ion-item>
+      <div class="error-message" *ngIf="!password && submitted">
+        ❌ Password is required
+      </div>
+
+      <ion-item class="form-item">
+        <ion-icon name="lock-closed-outline" slot="start" class="input-icon"></ion-icon>
+        <ion-input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword"
+          placeholder="Confirm your password"
+          label="Confirm Password"
+          labelPlacement="stacked">
+        </ion-input>
+        <ion-icon 
+          [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'" 
+          slot="end" 
+          class="toggle-password"
+          (click)="toggleConfirmPasswordVisibility()">
+        </ion-icon>
+      </ion-item>
+      <div class="error-message" *ngIf="!confirmPassword && submitted">
+        ❌ Please confirm your password
+      </div>
+      <div class="error-message" *ngIf="password && confirmPassword && password !== confirmPassword && submitted">
+        ❌ Passwords do not match
+      </div>
+
+      <ion-button 
+        expand="block" 
+        class="signup-btn"
+        (click)="signup()">
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        Create Account
+      </ion-button>
+
+      <div class="login-link">
+        <p>Already have an account? 
+          <a href="javascript:void(0)" (click)="goToLogin()">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</ion-content>

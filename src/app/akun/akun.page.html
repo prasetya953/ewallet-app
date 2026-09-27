@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akun</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ion-color-primary: #667eea;
+      --ion-color-primary-rgb: 102, 126, 234;
+      --ion-color-primary-contrast: #ffffff;
+      --ion-color-primary-contrast-rgb: 255, 255, 255;
+      --ion-color-primary-shade: #5a6fce;
+      --ion-color-primary-tint: #758bec;
+      
+      --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      --gradient-accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f8f9fa;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #1a1a1a;
+    }
+
+    ion-app {
+      background: #f8f9fa;
+    }
+
+    ion-header {
+      background: #f8f9fa;
+    }
+
+    ion-toolbar {
+      --background: #ffffff;
+      --color: #1a1a1a;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    ion-title {
+      color: #1a1a1a !important;
+      font-weight: 600;
+    }
+
+    ion-content {
+      --background: #f8f9fa;
+      --color: #1a1a1a;
+    }
+
+    .account-header {
+      background: linear-gradient(90deg, #262726, #3d3f3e);
+      padding: 50px 20px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+      border-radius: 0 0 25px 25px; /* Tambahkan border radius bawah */
+      margin-bottom: 20px; /* Beri jarak dengan konten di bawah */
+    }
+
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .user-name {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 10px 0 5px;
+      color: white;
+    }
+
+    .user-email {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+    }
+
+    .user-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      color: white;
+    }
+
+    .user-badge i {
+      color: #ffd700;
+    }
+
+    .content-wrapper {
+      background: #f8f9fa;
+      padding: 0; /* Ubah padding menjadi 0 */
+      margin-top: -20px; /* Naikkan sedikit untuk menyatu */
+    }
+
+    /* Quick Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 0 20px 20px;
+    }
+
+    .stat-item {
+      background: white;
+      padding: 15px 10px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: black;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #666666;
+      font-weight: 500;
+    }
+
+    /* Menu Section */
+    .menu-section {
+      padding: 0 20px;
+      margin: 25px 0;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title i {
+      color: #1a1a1a;
+      font-size: 16px;
+    }
+
+    /* Menu Items */
+    .menu-list {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      background: white;
+      color: #1a1a1a;
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-item:hover {
+      background: #f5f5f5;
+    }
+
+    .menu-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(90deg, #262726, #3d3f3e);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: white;
+      font-size: 16px;
+    }
+
+    .menu-content {
+      flex: 1;
+    }
+
+    .menu-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .menu-desc {
+      font-size: 12px;
+      color: #666666;
+    }
+
+    .menu-arrow {
+      color: #999999;
+      font-size: 14px;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      padding: 0 20px;
+      margin: 30px 0;
+    }
+
+    .action-button {
+      width: 100%;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .action-button i {
+      color: #1a1a1a;
+    }
+
+    .action-button:hover {
+      border-color: #667eea;
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+
+    .action-button:active {
+      transform: translateY(0);
+    }
+
+    .action-button.primary {
+      background: linear-gradient(90deg, #262726, #3d3f3e);
+      border-color: #667eea;
+      color: white;
+    }
+
+    .action-button.primary i {
+      color: white;
+    }
+
+    .action-button.primary:hover {
+      background: linear-gradient(90deg, #262726, #3d3f3e);
+      filter: brightness(1.1);
+    }
+
+    .action-button.danger {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      border-color: #dc2626;
+      color: white;
+    }
+
+    .action-button.danger i {
+      color: white;
+    }
+
+    .action-button.danger:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Recent Activity */
+    .activity-list {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      color: #1a1a1a;
+      font-size: 14px;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+      color: #1a1a1a;
+    }
+
+    .activity-desc {
+      font-size: 12px;
+      color: #666666;
+    }
+
+    .activity-time {
+      font-size: 11px;
+      color: #999999;
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      
+      .account-header {
+        padding: 40px 20px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Akun</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen>
+      <!-- Account Header -->
+      <div class="account-header">
+        <div class="avatar-container">
+          <img src="/assets/gambar/mobistiq.png" 
+               alt="Profile" class="avatar">
+        </div>
+        <h1 class="user-name">Mobistiq Mobile</h1>
+        <p class="user-email">mobistiqmobile@example.com</p>
+        <div class="user-badge">
+          <i class="fas fa-crown"></i>
+          Premium Member
+        </div>
+      </div>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <!-- Quick Stats -->
+        <div class="stats-grid slide-up">
+          <div class="stat-item">
+            <div class="stat-value">$2,450</div>
+            <div class="stat-label">Balance</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Transactions</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">4.8</div>
+            <div class="stat-label">Rating</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="action-buttons slide-up">
+          <button class="action-button primary" (click)="goToEditProfile()">
+            <i class="fas fa-user-edit"></i>
+            Edit Profil
+          </button>
+          
+          <button class="action-button" (click)="goToSettings()">
+            <i class="fas fa-cog"></i>
+            Pengaturan (Settings)
+          </button>
+        </div>
+
+        <!-- Account Menu -->
+        <div class="menu-section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-user-circle"></i>
+            Akun Saya
+          </h2>
+          
+          <div class="menu-list">
+            <a class="menu-item" (click)="goToEditProfile()">
+              <div class="menu-icon">
+                <i class="fas fa-user-edit"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Edit Profil</div>
+                <div class="menu-desc">Ubah informasi pribadi Anda</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </a>
+
+            <a class="menu-item" (click)="goToSettings()">
+              <div class="menu-icon">
+                <i class="fas fa-cog"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Pengaturan</div>
+                <div class="menu-desc">Kelola pengaturan aplikasi</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </a>
+
+            <a class="menu-item" (click)="goToSecurity()">
+              <div class="menu-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Keamanan</div>
+                <div class="menu-desc">Pengaturan keamanan akun</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Payment & Subscription -->
+        <div class="menu-section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-credit-card"></i>
+            Pembayaran & Langganan
+          </h2>
+          
+          <div class="menu-list">
+            <a class="menu-item" (click)="goToPayment()">
+              <div class="menu-icon">
+                <i class="fas fa-wallet"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Metode Pembayaran</div>
+                <div class="menu-desc">Kelola kartu dan pembayaran</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </a>
+
+            <a class="menu-item" (click)="goToSubscription()">
+              <div class="menu-icon">
+                <i class="fas fa-crown"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Langganan</div>
+                <div class="menu-desc">Kelola paket langganan</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </a>
+
+            <a class="menu-item" (click)="viewAllTransactions()">
+              <div class="menu-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <div class="menu-content">
+                <div class="menu-title">Riwayat Transaksi</div>
+                <div class="menu-desc">Lihat riwayat pembayaran</div>
+              </div>
+              <div class="menu-arrow">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="menu-section slide-up">
+          <h2 class="section-title">
+            <i class="fas fa-clock"></i>
+            Aktivitas Terbaru
+          </h2>
+          
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">Pembelian Berhasil</div>
+                <div class="activity-desc">Order #12345 - $24.99</div>
+              </div>
+              <div class="activity-time">2 jam lalu</div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">Pembaruan Profil</div>
+                <div class="activity-desc">Foto profil diperbarui</div>
+              </div>
+              <div class="activity-time">1 hari lalu</div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">Notifikasi Baru</div>
+                <div class="activity-desc">Promo spesial untuk Anda</div>
+              </div>
+              <div class="activity-time">2 hari lalu</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support & Help -->
+        <div class="action-buttons slide-up">
+          <button class="action-button" (click)="goToHelp()">
+            <i class="fas fa-question-circle"></i>
+            Bantuan & Dukungan
+          </button>
+          
+          <button class="action-button danger" (click)="goToLogin()">
+            <i class="fas fa-sign-out-alt"></i>
+            Keluar
+          </button>
+        </div>
+
+        <div style="height: 40px;"></div>
+      </div>
+    </ion-content>
+  </ion-app>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+  <script>
+    // Navigation functions
+    function goToEditProfile() {
+      alert('Navigating to Edit Profile page...');
+      console.log('Going to Edit Profile');
+    }
+
+    function goToSettings() {
+      alert('Navigating to Settings page...');
+      console.log('Going to Settings');
+    }
+
+    function goToSecurity() {
+      alert('Navigating to Security page...');
+      console.log('Going to Security');
+    }
+
+    function goToPayment() {
+      alert('Navigating to Payment Methods page...');
+      console.log('Going to Payment Methods');
+    }
+
+    function goToSubscription() {
+      alert('Navigating to Subscription page...');
+      console.log('Going to Subscription');
+    }
+
+    function goToHistory() {
+      alert('Navigating to Transaction History page...');
+      console.log('Going to Transaction History');
+    }
+
+    function goToHelp() {
+      alert('Navigating to Help & Support page...');
+      console.log('Going to Help & Support');
+    }
+
+    function logout() {
+      if (confirm('Apakah Anda yakin ingin keluar?')) {
+        alert('Logging out...');
+        console.log('User logged out');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Akun page loaded successfully');
+      
+      // Add slide-up animation to elements
+      const elements = document.querySelectorAll('.slide-up');
+      elements.forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.1}s`;
+      });
+    });
+  </script>
+</body>
+</html>

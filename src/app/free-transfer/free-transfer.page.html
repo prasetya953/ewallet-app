@@ -1,0 +1,346 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/beranda" color="dark"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Transfer Bank Gratis</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="free-transfer-page">
+  <div class="transfer-form">
+    <div class="free-badge">💸 TRANSFER GRATIS 100x</div>
+
+    <ion-item class="form-item">
+      <ion-input
+        type="number"
+        [(ngModel)]="transferAmount"
+        placeholder="Masukkan jumlah transfer"
+        label="Jumlah Transfer"
+        labelPlacement="stacked"
+      ></ion-input>
+    </ion-item>
+
+    <div class="bank-list">
+      <h3>Pilih Bank Tujuan</h3>
+      <div class="bank-grid">
+        <div 
+          *ngFor="let bank of banks" 
+          class="bank-item"
+          [class.selected]="selectedBank === bank.code"
+          (click)="selectBank(bank.code)"
+        >
+          <div class="bank-icon">{{ bank.code }}</div>
+          <p class="bank-name">{{ bank.name }}</p>
+        </div>
+      </div>
+    </div>
+
+    <ion-item class="form-item">
+      <ion-input
+        [(ngModel)]="accountNumber"
+        placeholder="Nomor rekening tujuan"
+        label="Nomor Rekening"
+        labelPlacement="stacked"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="form-item">
+      <ion-input
+        [(ngModel)]="accountName"
+        placeholder="Nama pemilik rekening"
+        label="Nama Pemilik"
+        labelPlacement="stacked"
+      ></ion-input>
+    </ion-item>
+
+    <div class="transfer-info" *ngIf="transferAmount > 0">
+      <div class="info-item">
+        <span class="label">Jumlah Transfer</span>
+        <span class="value">Rp{{ transferAmount | number:'1.0-0' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Biaya Transfer</span>
+        <span class="value" style="color: #48bb78;">GRATIS</span>
+      </div>
+      <div class="info-item total">
+        <span class="label">Total</span>
+        <span class="value">Rp{{ transferAmount | number:'1.0-0' }}</span>
+      </div>
+    </div>
+
+    <div class="action-button">
+      <ion-button 
+        expand="block" 
+        (click)="processTransfer()" 
+        [disabled]="!transferAmount || !selectedBank || !accountNumber"
+      >
+        Transfer Sekarang
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+.free-transfer-page {
+  --background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+}
+
+/* PERBAIKAN: Toolbar putih dengan teks dan icon hitam */
+ion-toolbar {
+  --background: #ffffff !important;
+  --border-color: #e1e5e9;
+  --border-width: 0 0 1px 0;
+  --border-style: solid;
+}
+
+ion-toolbar ion-title {
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+ion-back-button {
+  --color: #000000 !important;
+}
+
+ion-back-button::part(native) {
+  color: #000000 !important;
+}
+
+ion-back-button::part(icon) {
+  color: #000000 !important;
+}
+
+.transfer-form {
+  background: white;
+  border-radius: 25px 25px 0 0;
+  margin-top: 20px;
+  padding: 30px 20px;
+  min-height: calc(100vh - 80px);
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+  animation: slideUp 0.6s ease-out;
+}
+
+.free-badge {
+  background: linear-gradient(135deg, #ff6b6b, #feca57);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* PERBAIKAN: Form input yang jelas terbaca */
+.form-item {
+  --background: #f8f9fa;
+  --border-radius: 15px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin-bottom: 16px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.form-item:focus-within {
+  --background: white;
+  border-color: #ff6b6b;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+.form-item ion-label {
+  font-weight: 700;
+  color: #2c3e50 !important;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.form-item ion-input {
+  --padding-start: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3e50 !important;
+  --placeholder-color: #95a5a6;
+  --placeholder-opacity: 1;
+}
+
+/* Style khusus untuk input yang aktif */
+.form-item:focus-within ion-label {
+  color: #ff6b6b !important;
+}
+
+.form-item:focus-within ion-input {
+  color: #2c3e50 !important;
+}
+
+.bank-list {
+  margin: 25px 0;
+}
+
+.bank-list h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50 !important;
+  margin-bottom: 15px;
+}
+
+.bank-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.bank-item {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 15px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bank-item:active {
+  transform: scale(0.95);
+}
+
+.bank-item:hover {
+  border-color: #ff6b6b;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
+.bank-item.selected {
+  border-color: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b, #feca57);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.bank-icon {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 8px;
+  background: #f7fafc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  color: #4a5568;
+}
+
+.bank-item.selected .bank-icon {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.bank-name {
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+  color: #4a5568;
+}
+
+/* PERBAIKAN: Warna teks saat bank dipilih */
+.bank-item.selected .bank-name {
+  color: white !important;
+}
+
+.transfer-info {
+  background: linear-gradient(135deg, #fffbeb, #fed7aa);
+  border-radius: 15px;
+  padding: 16px;
+  margin: 20px 0;
+  border-left: 4px solid #f59e0b;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item .label {
+  font-size: 14px;
+  color: #78350f;
+  font-weight: 500;
+}
+
+.info-item .value {
+  font-size: 14px;
+  color: #78350f;
+  font-weight: 600;
+}
+
+.info-item.total {
+  border-top: 1px solid #fbbf24;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.info-item.total .value {
+  font-size: 16px;
+  color: #d97706;
+}
+
+.action-button {
+  margin-top: 20px;
+}
+
+.action-button ion-button {
+  --background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+  --border-radius: 15px;
+  --box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+  height: 56px;
+  font-weight: 700;
+  font-size: 16px;
+  --color: white;
+}
+
+.action-button ion-button:disabled {
+  --background: #cbd5e0;
+  --box-shadow: none;
+  --color: #718096;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .transfer-form {
+    padding: 25px 16px;
+    margin-top: 15px;
+  }
+  
+  .bank-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .bank-item {
+    padding: 12px 6px;
+  }
+  
+  .bank-name {
+    font-size: 10px;
+  }
+}
+</style>
